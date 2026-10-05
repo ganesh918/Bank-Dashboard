@@ -1,0 +1,50 @@
+/**
+ * Mobile layout parity with the original BankDash repo (Pavan210799/bank-dash).
+ * Disables motion/FX that were added later and can break iOS scroll/viewport.
+ */
+@media (max-width: 639px) {
+  .app-shell--fx::before,
+  .app-shell--fx::after {
+    display: none !important;
+  }
+
+  .app-shell--mobile .header-title,
+  .app-shell--mobile .page-main,
+  .app-shell--mobile .page-route,
+  .app-shell--mobile .animate-stagger > *,
+  .app-shell--mobile .dashboard-grid > .section,
+  .app-shell--mobile .stat-card,
+  .app-shell--mobile .sidebar-brand__wordmark {
+    animation: none !important;
+    transform: none !important;
+    filter: none !important;
+    letter-spacing: normal !important;
+  }
+
+  .app-shell--mobile .search-field:focus-within,
+  .app-shell--mobile .icon-btn:hover,
+  .app-shell--mobile .icon-btn:focus-visible,
+  .app-shell--mobile .menu-toggle:hover,
+  .app-shell--mobile .menu-toggle:focus-visible,
+  .app-shell--mobile .profile-menu__trigger.avatar:hover,
+  .app-shell--mobile .profile-menu__trigger.avatar:focus-visible {
+    transform: none !important;
+  }
+
+  .app-shell--mobile .section-card:hover,
+  .app-shell--mobile .stat-card:hover,
+  .app-shell--mobile .credit-card:hover,
+  .app-shell--mobile .transaction-item:hover {
+    transform: none !important;
+  }
+
+  .app-shell--mobile .expense-chart__slice text,
+  .app-shell--mobile .expense-stats:hover .expense-chart__svg {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .app-shell--mobile .section-card--expense:hover {
+    transform: none !important;
+  }
+}

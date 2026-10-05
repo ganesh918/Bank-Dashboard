@@ -12,6 +12,9 @@ import './styles/loans.css';
 import './styles/services.css';
 import './styles/settings.css';
 import './styles/animations.css';
+import './styles/mobile-original.css';
+import './styles/auth.css';
+import './styles/toast.css';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

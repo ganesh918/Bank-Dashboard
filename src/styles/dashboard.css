@@ -392,9 +392,17 @@
   min-width: 0;
 }
 
+.header--tablet .header-actions .profile-menu,
+.header--desktop .header-actions .profile-menu,
 .header--tablet .header-actions .avatar,
 .header--desktop .header-actions .avatar {
   margin-left: 5px;
+}
+
+.header-mobile-top .profile-menu {
+  justify-self: end;
+  width: 35px;
+  height: 35px;
 }
 
 .search-field {

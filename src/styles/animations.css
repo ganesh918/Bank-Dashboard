@@ -535,11 +535,15 @@
 
 .icon-btn:hover,
 .icon-btn:focus-visible,
-.avatar:hover,
-.avatar:focus-visible,
 .menu-toggle:hover,
 .menu-toggle:focus-visible {
   transform: scale(1.08) rotate(-2deg);
+  box-shadow: 0 10px 24px -8px color-mix(in srgb, var(--color-primary) 45%, transparent);
+}
+
+.profile-menu__trigger.avatar:hover,
+.profile-menu__trigger.avatar:focus-visible {
+  transform: scale(1.06);
   box-shadow: 0 10px 24px -8px color-mix(in srgb, var(--color-primary) 45%, transparent);
 }
 

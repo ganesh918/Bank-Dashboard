@@ -12,7 +12,7 @@ function sliceHoverTranslate(chart, slice, active) {
   const len = Math.hypot(dx, dy) || 1;
   const scale = chart.w / 269;
   const dist = (HOVER_BASE + slice.hoverBoost) * scale;
-  return `translate(${(dx / len) * dist}, ${(dy / len) * dist})`;
+  return `translate(${(dx / len) * dist} ${(dy / len) * dist})`;
 }
 
 export default function ExpenseStatistics() {
@@ -42,16 +42,11 @@ export default function ExpenseStatistics() {
               const active = hovered === i;
               const { x, y, label } = slice;
 
-              const slideTransform = sliceHoverTranslate(chart, slice, active);
-
               return (
                 <g
                   key={slice.key}
                   className={`expense-chart__slice${active ? ' expense-chart__slice--active' : ''}`}
-                  style={{
-                    transform: slideTransform ?? undefined,
-                    transition: 'transform 0.55s cubic-bezier(0.22, 1, 0.36, 1)',
-                  }}
+                  transform={sliceHoverTranslate(chart, slice, active)}
                   onMouseEnter={() => setHovered(i)}
                   onMouseLeave={() => setHovered(null)}
                   onFocus={() => setHovered(i)}
