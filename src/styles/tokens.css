@@ -1,0 +1,107 @@
+:root {
+  /* Deep Midnight + Aqua + Mint palette */
+  --color-white: #ffffff;
+  --color-surface: #121d33;
+  --color-bg: #0a1220;
+  --color-heading: #ecf8ff;
+  --color-muted: #8ba3bc;
+  --color-placeholder: #5c7389;
+  --color-nav-muted: #6b849c;
+  --color-primary: #22d3ee;
+  --color-accent: #0891b2;
+  --color-on-primary: #041018;
+  --color-deposit: #5eead4;
+  --color-withdraw: #334155;
+  --color-positive: #6ee7b7;
+  --color-negative: #f87171;
+  --color-dark: #dbeafe;
+  --color-onyx: #0f172a;
+  --color-icon-bg: #152238;
+  --color-search-bg: #111c2e;
+  --color-border: #243552;
+  --color-border-card: #2a3f5f;
+  --color-chart-grid: #2e4563;
+  --color-chart-edge: #152238;
+  --color-chart-weekly-grid: #1a2940;
+  --color-income: #5eead4;
+  --color-tx-positive: #6ee7b7;
+  --color-tx-negative: #fb7185;
+  --color-text-secondary: #8ba3bc;
+  --color-text-strong: #e2f0ff;
+  --color-table-divider: #2a3f5f;
+  --color-table-row-divider: #1e2f47;
+  --color-card-gradient-start: #5eead4;
+  --color-card-gradient-end: #0891b2;
+  --color-icon-well-1: #132238;
+  --color-icon-well-2: #1a3050;
+  --color-icon-well-3: #0f2840;
+  --color-icon-well-4: #243d5c;
+  --radius-card: 25px;
+  --radius-pill: 999px;
+  --shadow-card: 4px 4px 28px -2px rgba(4, 16, 32, 0.55);
+  --header-h: 100px;
+  --font-sans: 'BankDash Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-card: 'BankDash Lato', 'Lato', var(--font-sans);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: var(--color-bg);
+  color: var(--color-heading);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-synthesis: none;
+}
+
+/* Form controls default to the OS UI font (SF / Segoe) unless told otherwise */
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
+/* mobile: <640 | tablet: 640–1024 | desktop: >1024 (see useBreakpoint.js) */
+.app-shell--tablet {
+  --header-h: 85px;
+  --radius-card: 20px;
+  --dash-gap: 25px;
+  --dash-row-gap: 20px;
+  --sidebar-w: 230px;
+}
+
+/* --f is 0px at a 1024px viewport and 1px at 1440px; desktop values are written as
+   calc(tablet + (desktop - tablet) * var(--f)) so sizes grow from the tab frame to the desktop frame */
+.app-shell--desktop {
+  --f: clamp(0px, (100vw - 1024px) / 416, 1px);
+  --dash-gap: calc(25px + 5 * var(--f));
+  --dash-row-gap: calc(20px + 4 * var(--f));
+  --radius-card: calc(20px + 5 * var(--f));
+  --sidebar-w: calc(230px + 20 * var(--f));
+}
+
+.app-shell--mobile {
+  --header-h: 140px;
+  --radius-card: 15px;
+  --dash-gap: 24px;
+  --dash-row-gap: 24px;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}

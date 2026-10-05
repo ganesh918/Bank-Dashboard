@@ -1,0 +1,2866 @@
+.app-shell {
+  display: flex;
+  align-items: stretch;
+  min-height: 100vh;
+  background: var(--color-bg);
+  overflow-x: hidden;
+}
+
+.app-shell--tablet {
+  width: 100%;
+  max-width: min(1024px, 100vw);
+  margin-inline: auto;
+}
+
+.app-shell--desktop {
+  width: 100%;
+  max-width: min(1440px, 100vw);
+  margin-inline: auto;
+}
+
+.app-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+.sidebar-backdrop {
+  display: none;
+}
+
+.sidebar {
+  flex-shrink: 0;
+  background: var(--color-surface);
+  border-right: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  z-index: 30;
+}
+
+.sidebar--desktop,
+.sidebar--tablet {
+  align-self: stretch;
+  min-height: 100vh;
+  height: auto;
+}
+
+.sidebar--desktop {
+  width: 250px;
+}
+
+.sidebar--tablet {
+  width: 230px;
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 32px 44px 0;
+  font-size: 25px;
+  font-weight: 600;
+  color: var(--color-heading);
+  flex-shrink: 0;
+}
+
+.sidebar--tablet .sidebar-brand {
+  padding: 28px 30px 0;
+  font-size: 22px;
+}
+
+.sidebar-brand span {
+  display: flex;
+}
+
+/* Figma wordmark glyphs are 135×19 at the 25px logo size */
+.sidebar-brand__wordmark {
+  display: block;
+  height: 0.76em;
+  width: auto;
+  aspect-ratio: 135 / 19;
+}
+
+.sidebar-inner {
+  padding: 28px 0 40px 44px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.sidebar--tablet .sidebar-inner {
+  padding: 24px 0 32px 30px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  height: 64px;
+  text-decoration: none;
+  color: var(--color-nav-muted);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 22px;
+  position: relative;
+  transition: color 0.18s ease;
+}
+
+.nav-item::before {
+  content: '';
+  position: absolute;
+  left: -44px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 60px;
+  border-radius: 0 3px 3px 0;
+  background: var(--color-primary);
+  opacity: 0;
+  transition: opacity 0.18s ease;
+  pointer-events: none;
+}
+
+.sidebar--tablet .nav-item {
+  height: 56px;
+  gap: 20px;
+  font-size: 16px;
+}
+
+.nav-item img {
+  width: 25px;
+  height: 25px;
+  flex-shrink: 0;
+  opacity: 0.55;
+  filter: brightness(0) saturate(100%) invert(52%) sepia(18%) saturate(650%) hue-rotate(175deg)
+    brightness(92%) contrast(88%);
+  transition: opacity 0.18s ease, filter 0.18s ease;
+}
+
+.sidebar--tablet .nav-item img {
+  width: 20px;
+  height: 20px;
+}
+
+.nav-item {
+  outline: none;
+}
+
+.nav-item.active,
+.nav-item:hover,
+.nav-item:focus-visible {
+  color: var(--color-primary);
+}
+
+.nav-item:focus-visible {
+  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--color-primary) 35%, transparent);
+  border-radius: 8px;
+}
+
+.nav-item.active img,
+.nav-item:hover img,
+.nav-item:focus-visible img {
+  opacity: 1;
+  filter: brightness(0) saturate(100%) invert(78%) sepia(42%) saturate(1200%) hue-rotate(158deg)
+    brightness(98%) contrast(96%);
+}
+
+.nav-item.active::before {
+  opacity: 1;
+}
+
+.sidebar--tablet .nav-item::before {
+  left: -30px;
+  height: 50px;
+}
+
+/* Icon rail: reclaim main width between 768px and 1024px */
+.sidebar--compact {
+  width: 72px;
+}
+
+.sidebar--compact .sidebar-brand {
+  padding: 24px 0 0;
+  justify-content: center;
+  gap: 0;
+}
+
+.sidebar--compact .sidebar-brand span {
+  display: none;
+}
+
+.sidebar--compact .sidebar-brand img {
+  width: 32px;
+  height: 32px;
+}
+
+.sidebar--compact .sidebar-inner {
+  padding: 20px 0 32px;
+  align-items: center;
+}
+
+.sidebar--compact .nav-item {
+  justify-content: center;
+  width: 100%;
+  gap: 0;
+  height: 52px;
+}
+
+.sidebar--compact .nav-item span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.sidebar--compact .nav-item::before {
+  left: 0;
+  width: 4px;
+  height: 44px;
+  border-radius: 0 3px 3px 0;
+}
+
+/* Off-canvas nav (mobile + narrow tablet) */
+.app-shell--nav-drawer {
+  display: block;
+}
+
+.sidebar--drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100vh;
+  min-height: 0;
+  align-self: auto;
+  transform: translateX(-100%);
+  transition: transform 0.2s ease;
+  box-shadow: var(--shadow-card);
+  z-index: 40;
+}
+
+.sidebar--drawer.open {
+  transform: translateX(0);
+}
+
+.app-shell--nav-drawer .sidebar-backdrop.visible {
+  display: block;
+  position: fixed;
+  inset: 0;
+  top: var(--header-h);
+  background: rgba(74, 25, 66, 0.35);
+  z-index: 15;
+}
+
+.app-shell--nav-drawer.app-shell--tablet .sidebar--drawer {
+  width: 230px;
+}
+
+.header--with-menu {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  column-gap: 12px;
+}
+
+.header--with-menu .header-title {
+  justify-self: start;
+}
+
+.header--with-menu .header-actions {
+  grid-column: 3;
+}
+
+.menu-toggle--inline {
+  justify-self: start;
+}
+
+.header--desktop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 100px;
+  padding: 20px 40px 20px 38px;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.header--tablet {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 85px;
+  padding: 20px 30px 20px 26px;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.header--mobile {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-height: 140px;
+  padding: 25px 25px 20px;
+  background: var(--color-surface);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/* Figma 185:400: menu 18×14 · title centred between menu and avatar · avatar ends at x349 */
+.header-mobile-top {
+  display: grid;
+  grid-template-columns: 18px 1fr 35px;
+  align-items: center;
+  column-gap: 12px;
+  padding-right: 1px;
+}
+
+.menu-toggle {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0;
+  justify-self: start;
+}
+
+.header-mobile-top .menu-toggle {
+  align-self: start;
+  margin-top: 10px;
+}
+
+.menu-toggle span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: var(--color-heading);
+  border-radius: 2px;
+}
+
+/* Figma: Inter SemiBold — 28/34 desktop, 25/30 tab, 20/24 mobile */
+.header-title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--color-heading);
+  line-height: 1.2;
+}
+
+.header--tablet .header-title {
+  font-size: 25px;
+  line-height: 30px;
+}
+
+.header--mobile .header-title {
+  font-size: 20px;
+  line-height: 24px;
+  text-align: center;
+  justify-self: center;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header--tablet .header-title {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* Figma tab: search · 20 · settings · 20 · bell · 25 · avatar */
+.header--tablet .header-actions {
+  gap: 20px;
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+.header--tablet .header-actions .avatar,
+.header--desktop .header-actions .avatar {
+  margin-left: 5px;
+}
+
+.search-field {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  width: 255px;
+  height: 50px;
+  padding: 0 25px;
+  border-radius: var(--radius-pill);
+  background: var(--color-search-bg);
+}
+
+.search-field img {
+  display: block;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+}
+
+/* Figma 255px; shrinks only when the icon rail leaves too little header width */
+.header--tablet .search-field {
+  flex: 0 1 255px;
+  width: 255px;
+  min-width: 0;
+  height: 40px;
+  padding: 0 20px;
+  gap: 10px;
+}
+
+.header--tablet .search-field img {
+  width: 16px;
+  height: 16px;
+}
+
+.header--tablet .search-field input {
+  min-width: 0;
+  width: 100%;
+  font-size: 12px;
+}
+
+.header--tablet .icon-btn,
+.header--tablet .avatar {
+  flex-shrink: 0;
+}
+
+.search-field--mobile {
+  width: 100%;
+  height: 40px;
+  padding: 0 19px;
+  gap: 10px;
+}
+
+.search-field--mobile img {
+  width: 16px;
+  height: 16px;
+}
+
+.header--mobile .search-field--mobile input {
+  font-size: 13px;
+}
+
+.search-field input {
+  border: none;
+  background: transparent;
+  width: 100%;
+  font-size: 15px;
+  color: var(--color-heading);
+  outline: none;
+}
+
+.search-field input::placeholder {
+  color: var(--color-placeholder);
+}
+
+.icon-btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--color-icon-bg);
+  display: grid;
+  place-items: center;
+}
+
+.icon-btn img {
+  display: block;
+  width: 25px;
+  height: 25px;
+}
+
+.header--tablet .icon-btn {
+  width: 40px;
+  height: 40px;
+}
+
+/* Figma tab 150:195 / 150:200 — 18px glyph in 40px circle */
+.header--tablet .icon-btn img {
+  width: 18px;
+  height: 18px;
+}
+
+.avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.avatar--sm {
+  width: 35px;
+  height: 35px;
+}
+
+.avatar--tablet {
+  width: 45px;
+  height: 45px;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.dashboard-main {
+  flex: 1;
+  min-width: 0;
+  padding: 25px 40px 48px;
+  container-type: inline-size;
+  container-name: dash-main;
+}
+
+/* Figma tab: content starts 25px after the sidebar's 1px divider */
+.app-shell--tablet .dashboard-main {
+  padding: 20px 25px 40px 26px;
+}
+
+.app-shell--mobile .dashboard-main {
+  padding: 22px 25px 40px;
+}
+
+/* Safe default: single column (no overlap at any width) */
+.dashboard-grid {
+  display: grid;
+  min-width: 0;
+  gap: var(--dash-row-gap, 20px) var(--dash-gap, 20px);
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    'cards'
+    'transactions'
+    'weekly'
+    'expense'
+    'bottom';
+}
+
+.dashboard-grid > * {
+  min-width: 0;
+}
+
+.dashboard-row-bottom {
+  grid-area: bottom;
+  display: grid;
+  min-width: 0;
+  width: 100%;
+  gap: var(--dash-row-gap, 20px) var(--dash-gap, 20px);
+  grid-template-columns: 1fr;
+}
+
+/* Tablet 2-col — Figma tab: 487 + 25 + 231 content grid (743px) */
+@container dash-main (min-width: 520px) {
+  .app-shell--tablet .dashboard-grid {
+    width: 100%;
+    grid-template-columns: minmax(0, 487fr) minmax(0, 231fr);
+    grid-template-areas:
+      'cards transactions'
+      'weekly expense'
+      'bottom bottom';
+  }
+
+  /* Quick Transfer content needs its Figma 295px; Balance History absorbs the shrink */
+  .app-shell--tablet .dashboard-row-bottom {
+    grid-template-columns: minmax(295px, 295fr) minmax(0, 423fr);
+  }
+}
+
+/* Desktop 2-col — Figma 1440: 730 + 30 + 350; main is ≥744px at every desktop width */
+.app-shell--desktop .dashboard-grid {
+  width: 100%;
+  grid-template-columns: minmax(0, 730fr) minmax(0, 350fr);
+  grid-template-areas:
+    'cards transactions'
+    'weekly expense'
+    'bottom bottom';
+}
+
+.app-shell--desktop .dashboard-row-bottom {
+  grid-template-columns: minmax(calc(295px + 150 * var(--f)), 445fr) minmax(0, 635fr);
+}
+
+@container dash-main (max-width: 519px) {
+  .app-shell--tablet .dashboard-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'cards'
+      'transactions'
+      'weekly'
+      'expense'
+      'bottom';
+  }
+
+  .app-shell--tablet .dashboard-row-bottom {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Stacked mode: cards scroll horizontally like Figma mobile/tab narrow */
+@container dash-main (max-width: 579px) {
+  .app-shell--tablet .my-cards__row,
+  .app-shell--desktop .my-cards__row {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-right: 0;
+    width: calc(100% + 25px);
+    max-width: calc(100% + 25px);
+    margin-right: -25px;
+    box-sizing: border-box;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .app-shell--tablet .my-cards__row .credit-card,
+  .app-shell--desktop .my-cards__row .credit-card {
+    flex: 0 0 265px;
+    scroll-snap-align: start;
+  }
+}
+
+.my-cards {
+  grid-area: cards;
+  min-width: 0;
+  width: 100%;
+}
+
+.recent-transactions {
+  grid-area: transactions;
+  width: 100%;
+  container-type: inline-size;
+  container-name: recent-tx;
+}
+.weekly-activity {
+  grid-area: weekly;
+  width: 100%;
+}
+
+.expense-stats {
+  grid-area: expense;
+  width: 100%;
+}
+.dashboard-row-bottom .quick-transfer,
+.dashboard-row-bottom .balance-history {
+  min-width: 0;
+}
+
+.dashboard-row-bottom .section-card {
+  width: 100%;
+}
+
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  min-height: 27px;
+}
+
+.app-shell--tablet .section-head {
+  margin-bottom: 16px;
+  min-height: 22px;
+}
+
+.app-shell--mobile .section-head {
+  margin-bottom: 13px;
+  min-height: 19px;
+}
+
+.section-head--split {
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* Figma: Inter SemiBold — 22/27 desktop, 18/22 tab, 16/19 mobile */
+.section-head h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 27px;
+  color: var(--color-heading);
+}
+
+.app-shell--tablet .section-head h2 {
+  font-size: 18px;
+  line-height: 22px;
+}
+
+.app-shell--mobile .section-head h2 {
+  font-size: 16px;
+  line-height: 19px;
+}
+
+/* Figma offsets from the heading top: desktop 5px (7px in from the right), tab 4px, mobile 1px */
+.link-btn {
+  align-self: flex-start;
+  padding: 0;
+  margin-top: 5px;
+  margin-right: 7px;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 21px;
+  color: var(--color-heading);
+}
+
+.app-shell--tablet .link-btn {
+  margin-top: 4px;
+  margin-right: 0;
+  font-size: 15px;
+  line-height: 18px;
+}
+
+.app-shell--mobile .link-btn {
+  margin-top: 1px;
+  margin-right: 0;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.section-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.my-cards__row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--dash-gap, 30px);
+  width: 100%;
+}
+
+.app-shell--tablet .my-cards__row {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 26px;
+  width: 100%;
+}
+
+.app-shell--mobile .my-cards__row {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 4px;
+  padding-right: 0;
+  width: calc(100% + 25px);
+  max-width: calc(100% + 25px);
+  margin-right: -25px;
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Figma card text is Lato (Regular labels, Semibold values); line-height 1.2 = Figma "Auto" */
+.credit-card {
+  border-radius: 25px;
+  height: 235px;
+  padding: 24px 26px 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  font-family: var(--font-card);
+  line-height: 1.2;
+}
+
+.app-shell--tablet .credit-card {
+  height: 170px;
+  border-radius: 20px;
+  padding: 17px 20px 0;
+}
+
+.app-shell--mobile .credit-card {
+  flex: 0 0 265px;
+  height: 170px;
+  border-radius: 15px;
+  scroll-snap-align: start;
+  padding: 17px 20px 0;
+}
+
+.credit-card--primary {
+  color: var(--color-white);
+  background: linear-gradient(
+    135.5deg,
+    var(--color-card-gradient-start),
+    var(--color-card-gradient-end)
+  );
+}
+
+.credit-card--secondary {
+  color: var(--color-heading);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-card);
+}
+
+.credit-card__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+/* Figma: Balance 12/11px, CARD HOLDER & VALID THRU 12/10px (desktop / tab+mobile) */
+.credit-card__label {
+  margin: 0 0 4px;
+  font-size: 12px;
+  font-weight: 400;
+  opacity: 0.85;
+}
+
+.app-shell--tablet .credit-card__label,
+.app-shell--mobile .credit-card__label {
+  font-size: 10px;
+}
+
+.app-shell--tablet .credit-card__label--balance,
+.app-shell--mobile .credit-card__label--balance {
+  font-size: 11px;
+}
+
+/* Figma $5,756: 20px desktop, 16px tab+mobile */
+.credit-card__balance {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.app-shell--tablet .credit-card__balance,
+.app-shell--mobile .credit-card__balance {
+  font-size: 16px;
+}
+
+.credit-card__chip {
+  width: 35px;
+  height: 35px;
+}
+
+.app-shell--tablet .credit-card__chip,
+.app-shell--mobile .credit-card__chip {
+  width: 29px;
+  height: 29px;
+}
+
+.credit-card__meta {
+  display: flex;
+  gap: 32px;
+  margin-top: 20px;
+}
+
+.app-shell--tablet .credit-card__meta,
+.app-shell--mobile .credit-card__meta {
+  margin-top: 12px;
+  gap: 24px;
+}
+
+/* Figma Eddy Cusuma / 12/22: 15px desktop, 13px tab+mobile */
+.credit-card__value {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.app-shell--tablet .credit-card__value,
+.app-shell--mobile .credit-card__value {
+  font-size: 13px;
+}
+
+.credit-card__footer {
+  margin-top: auto;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.app-shell--tablet .credit-card__footer,
+.app-shell--mobile .credit-card__footer {
+  height: 51px;
+}
+
+/* Full-bleed strip pinned to the card bottom; margin-top must stay auto */
+.credit-card__footer {
+  margin-left: -26px;
+  margin-right: -26px;
+  padding: 0 26px;
+}
+
+.app-shell--tablet .credit-card__footer,
+.app-shell--mobile .credit-card__footer {
+  margin-left: -20px;
+  margin-right: -20px;
+  padding: 0 20px;
+}
+
+.credit-card--primary .credit-card__footer {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+}
+
+.credit-card--secondary .credit-card__footer {
+  border-top: 1px solid var(--color-border-card);
+}
+
+/* Figma 3778 **** **** 1234: 22px desktop, 15px tab+mobile */
+.credit-card__number {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.app-shell--tablet .credit-card__number,
+.app-shell--mobile .credit-card__number {
+  font-size: 15px;
+}
+
+/* Mastercard mark: fixed Figma size (desktop 44×30, tab/mobile 27×18); never shrinks */
+.credit-card__brand {
+  display: flex;
+  flex: 0 0 auto;
+}
+
+.credit-card__brand span {
+  flex: 0 0 auto;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.credit-card__brand span:last-child {
+  margin-left: -16px;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.credit-card--secondary .credit-card__brand span {
+  background: rgba(34, 211, 238, 0.45);
+}
+
+.credit-card--secondary .credit-card__brand span:last-child {
+  background: rgba(94, 234, 212, 0.28);
+}
+
+.app-shell--tablet .credit-card__brand span,
+.app-shell--mobile .credit-card__brand span {
+  width: 18px;
+  height: 18px;
+}
+
+.app-shell--tablet .credit-card__brand span:last-child,
+.app-shell--mobile .credit-card__brand span:last-child {
+  margin-left: -9px;
+}
+
+/* Tablet cards scale down with their width; cqi is % of the 191px content box at Figma's 231px card */
+.app-shell--tablet .credit-card {
+  container-type: inline-size;
+}
+
+.app-shell--tablet .credit-card__label {
+  font-size: min(10px, 5.24cqi);
+}
+
+.app-shell--tablet .credit-card__label--balance {
+  font-size: min(11px, 5.76cqi);
+}
+
+.app-shell--tablet .credit-card__balance {
+  font-size: min(16px, 8.38cqi);
+  white-space: nowrap;
+}
+
+.app-shell--tablet .credit-card__number {
+  font-size: min(15px, 7.85cqi);
+  white-space: nowrap;
+}
+
+.app-shell--tablet .credit-card__value {
+  font-size: min(13px, 6.81cqi);
+  white-space: nowrap;
+}
+
+.app-shell--tablet .credit-card__meta {
+  gap: min(24px, 12.57cqi);
+}
+
+.app-shell--tablet .credit-card__chip {
+  width: min(29px, 15.2cqi);
+  height: min(29px, 15.2cqi);
+}
+
+.section-card--transactions {
+  height: 235px;
+  padding: 25px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.recent-transactions .section-card--transactions {
+  overflow: visible;
+}
+
+.recent-transactions .transaction-amount.positive {
+  color: var(--color-tx-positive);
+}
+
+.recent-transactions .transaction-amount.negative {
+  color: var(--color-tx-negative);
+}
+
+.app-shell--tablet .section-card--transactions {
+  height: 170px;
+  padding: 15px;
+}
+
+.app-shell--mobile .section-card--transactions {
+  height: 214px;
+  padding: 20px 18px;
+}
+
+.transaction-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.app-shell--tablet .transaction-list {
+  gap: 10px;
+}
+
+.transaction-item {
+  display: flex;
+  align-items: center;
+  gap: 17px;
+  min-width: 0;
+}
+
+.app-shell--tablet .transaction-item {
+  gap: 8px;
+}
+
+.app-shell--tablet .transaction-copy {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.transaction-icon {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.app-shell--tablet .transaction-icon,
+.app-shell--mobile .transaction-icon {
+  width: 40px;
+  height: 40px;
+}
+
+.app-shell--tablet .recent-transactions .transaction-icon,
+.app-shell--mobile .recent-transactions .transaction-icon {
+  width: 50px;
+  height: 50px;
+}
+
+.transaction-icon img {
+  width: 28px;
+  height: 28px;
+}
+
+.app-shell--tablet .transaction-icon img,
+.app-shell--mobile .transaction-icon img {
+  width: 20px;
+  height: 20px;
+}
+
+.transaction-copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.recent-transactions .transaction-copy {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.recent-transactions .transaction-item {
+  align-items: center;
+  gap: 12px;
+}
+
+.recent-transactions .transaction-icon {
+  width: 50px;
+  height: 50px;
+  flex-shrink: 0;
+}
+
+.recent-transactions .transaction-icon img {
+  width: 26px;
+  height: 26px;
+}
+
+.recent-transactions .transaction-amount {
+  flex: 0 0 auto;
+  margin-left: 4px;
+}
+
+/* Figma: title + amount Inter Medium, date Regular */
+.transaction-title {
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.19;
+  color: var(--color-dark);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Show full titles like Figma (e.g. “Deposit from my Card”) */
+.recent-transactions .transaction-title {
+  overflow: visible;
+  text-overflow: unset;
+  white-space: nowrap;
+}
+
+.app-shell--tablet .transaction-title,
+.app-shell--mobile .transaction-title {
+  font-size: 13px;
+}
+
+.app-shell--tablet .transaction-title {
+  line-height: 16px;
+  margin-bottom: 3px;
+}
+
+.transaction-date {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--color-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.app-shell--tablet .transaction-date,
+.app-shell--mobile .transaction-date {
+  font-size: 12px;
+  line-height: 15px;
+}
+
+.transaction-amount {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.19;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.app-shell--tablet .transaction-amount,
+.app-shell--mobile .transaction-amount {
+  font-size: 11px;
+  line-height: 13px;
+}
+
+.transaction-amount.positive {
+  color: var(--color-positive);
+}
+
+.transaction-amount.negative {
+  color: var(--color-negative);
+}
+
+.app-shell--mobile .transaction-list {
+  gap: 12px;
+}
+
+.app-shell--mobile .transaction-item {
+  gap: 15px;
+  height: 50px;
+}
+
+.app-shell--mobile .transaction-icon {
+  width: 50px;
+  height: 50px;
+}
+
+.app-shell--mobile .transaction-icon img {
+  width: 25px;
+  height: 25px;
+}
+
+@container recent-tx (max-width: 340px) {
+  .recent-transactions .transaction-title {
+    font-size: 13px;
+    line-height: 1.2;
+  }
+
+  .recent-transactions .transaction-amount {
+    font-size: 11px;
+  }
+
+  .recent-transactions .transaction-icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .recent-transactions .transaction-icon img {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+.app-shell--mobile .transaction-title {
+  font-size: 14px;
+  line-height: 17px;
+  margin-bottom: 4px;
+}
+
+.app-shell--mobile .transaction-date {
+  font-size: 12px;
+  line-height: 15px;
+}
+
+.app-shell--mobile .transaction-amount {
+  font-size: 11px;
+  line-height: 13px;
+}
+
+.section-card--weekly {
+  height: 322px;
+  padding: 28px 25px 28px 20px;
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+.chart-legend--in-card {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  font-size: 15px;
+  color: var(--color-muted);
+  margin-bottom: 22px;
+  flex-shrink: 0;
+}
+
+.section-card--weekly .chart-legend--in-card {
+  margin-bottom: 22px;
+  gap: 30px;
+}
+
+.section-card--weekly .chart-legend--in-card span {
+  gap: 10px;
+}
+
+.app-shell--tablet .chart-legend--in-card {
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+
+.app-shell--tablet .section-card--weekly .chart-legend--in-card {
+  margin-bottom: 6px;
+  gap: 25px;
+  min-height: 16px;
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.app-shell--tablet .section-card--weekly .chart-legend--in-card span {
+  gap: 10px;
+}
+
+.app-shell--tablet .section-card--weekly .chart-legend--in-card .dot {
+  width: 12px;
+  height: 12px;
+}
+
+.app-shell--tablet .section-card--weekly {
+  height: 261px;
+  padding: 18px 29px 16px 18px;
+}
+
+.app-shell--mobile .chart-legend--in-card {
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.app-shell--mobile .section-card--weekly .chart-legend--in-card {
+  margin-bottom: 1px;
+  gap: 28px;
+  min-height: 15px;
+  font-size: 12px;
+  line-height: 15px;
+}
+
+.app-shell--mobile .section-card--weekly .chart-legend--in-card span {
+  gap: 10px;
+}
+
+.app-shell--mobile .section-card--weekly .chart-legend--in-card .dot {
+  width: 12px;
+  height: 12px;
+}
+
+.app-shell--mobile .section-card--weekly {
+  height: 254px;
+  padding: 17px 18px 17px 16px;
+}
+
+/* Weekly Activity — Figma 126:97 desktop, 147:347 tab, 181:101 mobile */
+.weekly-chart {
+  --bar-w: 15px;
+  --bar-gap: 12px;
+  --x-band: 32px;
+  --x-label-gap: 16px;
+  --y-band: 28px;
+  --y-font: 13px;
+  --x-font: 13px;
+  --y-gap: 10px;
+  --plot-pad-top: 8px;
+  flex: 1;
+  min-height: 0;
+  padding: var(--plot-pad-top) 0 0;
+  box-sizing: border-box;
+}
+
+.app-shell--tablet .weekly-chart {
+  --bar-w: 10px;
+  --bar-gap: 8px;
+  --x-band: 28px;
+  --x-label-gap: 12px;
+  --y-band: 24px;
+  --y-font: 12px;
+  --x-font: 12px;
+  --y-gap: 8px;
+  --plot-pad-top: 6px;
+}
+
+.app-shell--mobile .weekly-chart {
+  --bar-w: 7px;
+  --bar-gap: 5px;
+  --x-band: 24px;
+  --x-label-gap: 10px;
+  --y-band: 22px;
+  --y-font: 12px;
+  --x-font: 12px;
+  --y-gap: 6px;
+  --plot-pad-top: 11px;
+}
+
+.weekly-chart__plot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--x-label-gap);
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+.weekly-chart__body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.weekly-chart__stage {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+}
+
+.weekly-chart__svg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: visible;
+}
+
+.weekly-chart__grid line {
+  stroke: var(--color-chart-weekly-grid);
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+
+.weekly-chart__day {
+  pointer-events: none;
+}
+
+.weekly-chart__bar {
+  pointer-events: all;
+  cursor: pointer;
+  outline: none;
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  transition:
+    filter 0.16s ease,
+    transform 0.16s ease;
+}
+
+.weekly-chart__bar--withdraw {
+  fill: var(--color-withdraw);
+}
+
+.weekly-chart__bar--deposit {
+  fill: var(--color-deposit);
+}
+
+.weekly-chart__bar:hover,
+.weekly-chart__bar:focus-visible {
+  filter: brightness(1.14);
+  transform: scale(1.08, 1.05);
+}
+
+.weekly-chart__bar:focus-visible {
+  stroke: color-mix(in srgb, var(--color-heading) 25%, transparent);
+  stroke-width: 1.5px;
+}
+
+.weekly-chart__y,
+.weekly-chart__x {
+  list-style: none;
+  margin: 0;
+  color: var(--color-muted);
+  font-weight: 400;
+  line-height: 1.2;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.weekly-chart__y {
+  position: relative;
+  flex: 0 0 var(--y-band);
+  width: var(--y-band);
+  padding: 0;
+}
+
+.weekly-chart__y li {
+  position: absolute;
+  right: var(--y-gap);
+  left: 0;
+  transform: translateY(-50%);
+  text-align: right;
+}
+
+.weekly-chart__y span {
+  font-size: var(--y-font);
+}
+
+.weekly-chart__x {
+  position: relative;
+  flex-shrink: 0;
+  min-height: 15px;
+  margin: 0 0 0 var(--y-band);
+  padding: 0;
+  width: calc(100% - var(--y-band));
+  box-sizing: border-box;
+}
+
+.weekly-chart__x li {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+}
+
+.weekly-chart__x span {
+  display: block;
+  font-size: var(--x-font);
+  line-height: 15px;
+  text-align: center;
+}
+
+.section-card--expense {
+  height: 322px;
+  padding: 31px 41px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+  --expense-chart-size: 269px;
+  --expense-chart-ratio: 269 / 260;
+}
+
+.app-shell--tablet .section-card--expense {
+  height: 261px;
+  /* Figma tab card 231×261: chart 181×175 inset 25×43 */
+  padding: 43px 25px;
+  --expense-chart-size: 181px;
+  --expense-chart-ratio: 181 / 175;
+}
+
+.app-shell--mobile .section-card--expense {
+  height: 240px;
+  padding: 22px 61px;
+  --expense-chart-size: min(203px, calc(100% - 0px));
+  --expense-chart-ratio: 203 / 196;
+}
+
+.expense-chart {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  overflow: visible;
+}
+
+.expense-chart__svg {
+  width: var(--expense-chart-size);
+  height: auto;
+  aspect-ratio: var(--expense-chart-ratio, 269 / 260);
+  max-width: 100%;
+  flex-shrink: 0;
+  overflow: visible;
+}
+
+.expense-chart__slice {
+  cursor: pointer;
+  outline: none;
+}
+
+.expense-chart__slice:focus-visible .expense-chart__wedge {
+  filter: brightness(1.06);
+}
+
+.expense-chart__slice--active .expense-chart__wedge {
+  filter: brightness(1.08);
+}
+
+.expense-chart__wedge {
+  transition: filter 0.18s ease;
+}
+
+.section-card--balance {
+  height: 276px;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.app-shell--tablet .section-card--balance {
+  height: 220px;
+}
+
+.app-shell--mobile .section-card--balance {
+  height: 223px;
+}
+
+/* Balance History — plot insets from Figma: desktop 105:385, tab 150:88, mobile 181:276 */
+.balance-chart {
+  --plot-inset: 35px 25px 56px 63px;
+  --y-font: 13px;
+  --x-font: 14px;
+  --y-gap: 8px;
+  --x-gap: 9px;
+  flex: 1;
+  min-height: 0;
+  padding: var(--plot-inset);
+  box-sizing: border-box;
+}
+
+.app-shell--tablet .balance-chart {
+  --plot-inset: 20px 20px 40px 56px;
+  --y-font: 12px;
+  --x-font: 12px;
+  --y-gap: 6px;
+  --x-gap: 8px;
+}
+
+.app-shell--mobile .balance-chart {
+  --plot-inset: 21px 18px 42px 52px;
+  --y-font: 12px;
+  --x-font: 12px;
+  --y-gap: 4px;
+  --x-gap: 8px;
+}
+
+.balance-chart__plot {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.balance-chart__svg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: visible;
+}
+
+.balance-chart__grid line {
+  stroke: var(--color-chart-grid);
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+  shape-rendering: crispEdges;
+}
+
+.balance-chart__edge {
+  stroke: var(--color-chart-edge);
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+
+.balance-chart__line {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.balance-chart__plot {
+  cursor: crosshair;
+  touch-action: pan-y;
+}
+
+.balance-chart__guide {
+  stroke: var(--color-accent);
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+  opacity: 0.5;
+}
+
+.balance-chart__halo {
+  fill: var(--color-primary);
+  opacity: 0.15;
+}
+
+.balance-chart__dot {
+  fill: var(--color-white);
+  stroke: var(--color-accent);
+  stroke-width: 3;
+}
+
+.balance-chart__hover {
+  pointer-events: none;
+  animation: balance-fade 0.15s ease-out;
+}
+
+.balance-chart__tip {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: var(--color-onyx);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  color: var(--color-heading);
+  white-space: nowrap;
+  pointer-events: none;
+  transform: translate(-50%, calc(-100% - 16px));
+  animation: balance-fade 0.15s ease-out;
+}
+
+.balance-chart__tip--start {
+  transform: translate(-12px, calc(-100% - 16px));
+}
+
+.balance-chart__tip--end {
+  transform: translate(calc(-100% + 12px), calc(-100% - 16px));
+}
+
+.balance-chart__tip--below {
+  transform: translate(-50%, 16px);
+}
+
+.balance-chart__tip--below.balance-chart__tip--start {
+  transform: translate(-12px, 16px);
+}
+
+.balance-chart__tip--below.balance-chart__tip--end {
+  transform: translate(calc(-100% + 12px), 16px);
+}
+
+.balance-chart__tip-value {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 16px;
+}
+
+.balance-chart__tip-month {
+  font-size: 11px;
+  line-height: 13px;
+  color: var(--color-nav-muted);
+}
+
+@keyframes balance-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+.balance-chart__y,
+.balance-chart__x {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  color: var(--color-muted);
+  font-weight: 400;
+  line-height: 1.2;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.balance-chart__y li {
+  position: absolute;
+  right: 100%;
+  width: 6px;
+  height: 1px;
+  background: var(--color-muted);
+}
+
+.balance-chart__y span {
+  position: absolute;
+  right: calc(100% + var(--y-gap));
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: var(--y-font);
+}
+
+.balance-chart__x li {
+  position: absolute;
+  top: 100%;
+  width: 1px;
+  height: 4px;
+  background: var(--color-muted);
+}
+
+.balance-chart__x span {
+  position: absolute;
+  left: 0;
+  top: var(--x-gap);
+  font-size: var(--x-font);
+}
+
+.chart-wrap {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+}
+
+.chart-legend {
+  display: flex;
+  gap: 16px;
+  font-size: 15px;
+  color: var(--color-muted);
+}
+
+.chart-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dot {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot--deposit {
+  background: var(--color-deposit);
+}
+
+.dot--withdraw {
+  background: var(--color-withdraw);
+}
+
+.section-card--transfer {
+  height: 276px;
+  padding: 35px 25px 25px;
+  box-sizing: border-box;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.app-shell--tablet .section-card--transfer {
+  height: 220px;
+  padding: 31px 15px 15px;
+  overflow: visible;
+}
+
+.app-shell--mobile .section-card--transfer {
+  height: 195px;
+  padding: 20px 18px 16px;
+}
+
+.transfer-contacts {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 24px;
+  position: relative;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.transfer-contacts::-webkit-scrollbar {
+  display: none;
+}
+
+.app-shell--tablet .transfer-contacts {
+  gap: 15px;
+  margin-bottom: 26px;
+  overflow: visible;
+  flex-wrap: nowrap;
+}
+
+/* Scroll container clips box-shadows at its edge; extend it into the card's 18px side
+   padding so the arrow's shadow fits, negative margins keep the Figma layout unchanged */
+.app-shell--mobile .transfer-contacts {
+  gap: 21px;
+  max-width: none;
+  padding: 0 18px 20px 0;
+  margin: 0 -18px -2px 0;
+}
+
+.transfer-contact {
+  text-align: center;
+  width: 85px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+}
+
+.app-shell--tablet .transfer-contact {
+  width: auto;
+  flex: 0 0 auto;
+}
+
+.app-shell--tablet .transfer-contact[data-contact='livia-bator'] {
+  width: 60px;
+}
+
+.app-shell--tablet .transfer-contact[data-contact='randy-press'] {
+  width: 71px;
+}
+
+.app-shell--tablet .transfer-contact[data-contact='workman'] {
+  width: 54px;
+}
+
+.app-shell--mobile .transfer-contact {
+  width: auto;
+  flex: 0 0 auto;
+}
+
+/* Figma widths as minimums: names grow by sub-pixels across fonts/OSes instead of truncating */
+.app-shell--mobile .transfer-contact[data-contact='livia-bator'] {
+  min-width: 60px;
+}
+
+.app-shell--mobile .transfer-contact[data-contact='randy-press'] {
+  min-width: 71px;
+}
+
+.app-shell--mobile .transfer-contact[data-contact='workman'] {
+  min-width: 54px;
+}
+
+.transfer-labels {
+  width: 100%;
+  min-width: 0;
+}
+
+.transfer-avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto 12px;
+}
+
+.app-shell--tablet .transfer-avatar,
+.app-shell--mobile .transfer-avatar {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 8px;
+}
+
+.app-shell--tablet .transfer-avatar {
+  margin-bottom: 12px;
+}
+
+.transfer-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.transfer-name {
+  margin: 0 0 4px;
+  font-size: 16px;
+  color: var(--color-dark);
+}
+
+.app-shell--tablet .transfer-name {
+  font-size: 12px;
+  line-height: 15px;
+  margin-bottom: 1px;
+}
+
+.app-shell--mobile .transfer-name {
+  font-size: 12px;
+  line-height: 15px;
+  margin: 0 0 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.transfer-role {
+  margin: 0;
+  font-size: 15px;
+  color: var(--color-muted);
+}
+
+.app-shell--tablet .transfer-role {
+  font-size: 12px;
+}
+
+.app-shell--mobile .transfer-role {
+  font-size: 12px;
+  line-height: 15px;
+  white-space: nowrap;
+}
+
+.transfer-next {
+  margin-left: auto;
+  width: 50px;
+  height: 50px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  display: grid;
+  place-items: center;
+  align-self: center;
+}
+
+.app-shell--tablet .transfer-next,
+.app-shell--mobile .transfer-next {
+  width: 40px;
+  height: 40px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.transfer-form {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.transfer-form-label {
+  font-size: 16px;
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+
+.app-shell--tablet .transfer-form-label {
+  flex: 0 0 77px;
+  font-size: 12px;
+  line-height: 15px;
+}
+
+.app-shell--mobile .transfer-form-label {
+  font-size: 13px;
+}
+
+.app-shell--tablet .transfer-form {
+  gap: 20px;
+  align-items: center;
+}
+
+.amount-composite {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  max-width: 265px;
+  height: 50px;
+  background: var(--color-icon-bg);
+  border-radius: var(--radius-pill);
+}
+
+.amount-composite input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  padding: 0 130px 0 30px;
+  font-size: 16px;
+  color: var(--color-muted);
+  outline: none;
+}
+
+.amount-composite .send-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 50px;
+  padding: 0 20px;
+  border-radius: var(--radius-pill);
+  background: var(--color-accent);
+  color: var(--color-white);
+  font-size: 16px;
+  font-weight: 500;
+  min-width: 125px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.amount-composite .send-btn img {
+  flex-shrink: 0;
+}
+
+.app-shell--tablet .amount-composite {
+  flex: 1 1 168px;
+  min-width: 168px;
+  max-width: none;
+  height: 40px;
+}
+
+.app-shell--mobile .amount-composite {
+  height: 40px;
+  max-width: 100%;
+}
+
+.app-shell--tablet .amount-composite input {
+  font-size: 12px;
+  line-height: 15px;
+  padding: 0 103px 0 15px;
+}
+
+.app-shell--mobile .amount-composite input {
+  font-size: 13px;
+  padding: 0 100px 0 16px;
+}
+
+.app-shell--tablet .amount-composite .send-btn {
+  height: 40px;
+  width: 100px;
+  min-width: 100px;
+  font-size: 13px;
+  padding: 0 14px 0 16px;
+  gap: 8px;
+  justify-content: flex-start;
+}
+
+.app-shell--mobile .amount-composite .send-btn {
+  height: 40px;
+  min-width: 100px;
+  font-size: 13px;
+  padding: 0 14px;
+  gap: 8px;
+}
+
+.app-shell--mobile .sidebar--drawer .sidebar-brand {
+  padding: 20px 25px 0;
+}
+
+.app-shell--mobile .sidebar--drawer .sidebar-inner {
+  padding: 20px 0 40px 44px;
+}
+
+.app-shell--mobile .sidebar--drawer .nav-item::before {
+  left: -44px;
+}
+
+.app-shell--tablet .transfer-role {
+  line-height: 15px;
+}
+
+/* ─── Desktop 1025–1440: each size interpolates tab → desktop Figma via --f (tokens.css) ─── */
+
+/* Sidebar */
+.sidebar--desktop {
+  width: var(--sidebar-w);
+}
+
+.sidebar--desktop .sidebar-brand {
+  padding: calc(28px + 4 * var(--f)) calc(30px + 14 * var(--f)) 0;
+  font-size: calc(22px + 3 * var(--f));
+}
+
+.sidebar--desktop .sidebar-inner {
+  padding: calc(24px + 4 * var(--f)) 0 calc(32px + 8 * var(--f)) calc(30px + 14 * var(--f));
+}
+
+.sidebar--desktop .nav-item {
+  height: calc(56px + 8 * var(--f));
+  gap: calc(20px + 6 * var(--f));
+  font-size: calc(16px + 2 * var(--f));
+}
+
+.sidebar--desktop .nav-item img {
+  width: calc(20px + 5 * var(--f));
+  height: calc(20px + 5 * var(--f));
+}
+
+.sidebar--desktop .nav-item::before {
+  left: calc(-30px - 14 * var(--f));
+  height: calc(50px + 10 * var(--f));
+}
+
+/* Header */
+.header--desktop {
+  min-height: calc(85px + 15 * var(--f));
+  gap: calc(16px + 8 * var(--f));
+  padding: 20px calc(30px + 10 * var(--f)) 20px calc(26px + 14 * var(--f));
+}
+
+.header--desktop .header-title {
+  font-size: calc(25px + 3 * var(--f));
+  line-height: calc(30px + 4 * var(--f));
+}
+
+.header--desktop .header-actions {
+  gap: calc(20px + 10 * var(--f));
+}
+
+.header--desktop .search-field {
+  height: calc(40px + 10 * var(--f));
+  padding: 0 calc(20px + 5 * var(--f));
+  gap: calc(10px + 5 * var(--f));
+}
+
+.header--desktop .search-field img {
+  width: calc(16px + 4 * var(--f));
+  height: calc(16px + 4 * var(--f));
+}
+
+.header--desktop .search-field input {
+  font-size: calc(12px + 3 * var(--f));
+}
+
+.header--desktop .icon-btn {
+  width: calc(40px + 10 * var(--f));
+  height: calc(40px + 10 * var(--f));
+}
+
+/* Figma 105:125 / 105:130 insets (settings 12·12, bell 13·12); tab is 11·11 */
+.header--desktop .icon-btn {
+  place-items: start;
+  padding: 0;
+}
+
+.header--desktop .icon-btn img {
+  width: calc(18px + 7 * var(--f));
+  height: calc(18px + 7 * var(--f));
+  margin: calc(11px + 1 * var(--f)) 0 0 calc(11px + 1 * var(--f));
+}
+
+.header--desktop .icon-btn[aria-label='Notifications'] img {
+  margin-left: calc(11px + 2 * var(--f));
+}
+
+.header--desktop .avatar {
+  width: calc(45px + 15 * var(--f));
+  height: calc(45px + 15 * var(--f));
+}
+
+/* Content frame */
+.app-shell--desktop .dashboard-main {
+  padding: calc(20px + 4 * var(--f)) calc(25px + 15 * var(--f)) calc(40px + 8 * var(--f))
+    calc(26px + 14 * var(--f));
+}
+
+.app-shell--desktop .section-head {
+  margin-bottom: calc(16px + 4 * var(--f));
+  min-height: calc(22px + 5 * var(--f));
+}
+
+/* Figma desktop: the middle row sits 18px under its headings (20px elsewhere) */
+.app-shell--desktop .weekly-activity .section-head,
+.app-shell--desktop .expense-stats .section-head {
+  margin-bottom: calc(16px + 2 * var(--f));
+}
+
+.app-shell--desktop .section-head h2 {
+  font-size: calc(18px + 4 * var(--f));
+  line-height: calc(22px + 5 * var(--f));
+}
+
+.app-shell--desktop .link-btn {
+  margin-top: calc(4px + 1 * var(--f));
+  margin-right: calc(7 * var(--f));
+  font-size: calc(15px + 2 * var(--f));
+  line-height: calc(18px + 3 * var(--f));
+}
+
+/* My Cards */
+.app-shell--desktop .my-cards__row {
+  gap: calc(26px + 4 * var(--f));
+}
+
+.app-shell--desktop .credit-card {
+  height: calc(170px + 65 * var(--f));
+  border-radius: var(--radius-card);
+  padding: calc(17px + 7 * var(--f)) calc(20px + 6 * var(--f)) 0;
+}
+
+.app-shell--desktop .credit-card__label {
+  font-size: calc(10px + 2 * var(--f));
+}
+
+.app-shell--desktop .credit-card__label--balance {
+  font-size: calc(11px + 1 * var(--f));
+}
+
+.app-shell--desktop .credit-card__balance {
+  font-size: calc(16px + 4 * var(--f));
+}
+
+.app-shell--desktop .credit-card__chip {
+  width: calc(29px + 6 * var(--f));
+  height: calc(29px + 6 * var(--f));
+}
+
+.app-shell--desktop .credit-card__meta {
+  margin-top: calc(12px + 8 * var(--f));
+  gap: calc(24px + 8 * var(--f));
+}
+
+.app-shell--desktop .credit-card__value {
+  font-size: calc(13px + 2 * var(--f));
+  white-space: nowrap;
+}
+
+.app-shell--desktop .credit-card__footer {
+  height: calc(51px + 19 * var(--f));
+}
+
+.app-shell--desktop .credit-card__footer {
+  margin-left: calc(-20px - 6 * var(--f));
+  margin-right: calc(-20px - 6 * var(--f));
+  padding: 0 calc(20px + 6 * var(--f));
+}
+
+.app-shell--desktop .credit-card__number {
+  font-size: calc(15px + 7 * var(--f));
+  white-space: nowrap;
+}
+
+.app-shell--desktop .credit-card__brand span {
+  width: calc(18px + 12 * var(--f));
+  height: calc(18px + 12 * var(--f));
+}
+
+.app-shell--desktop .credit-card__brand span:last-child {
+  margin-left: calc(-9px - 7 * var(--f));
+}
+
+/* Recent Transaction */
+.app-shell--desktop .section-card--transactions {
+  height: calc(170px + 65 * var(--f));
+  padding: calc(15px + 10 * var(--f));
+}
+
+.app-shell--desktop .transaction-list {
+  gap: 10px;
+}
+
+.app-shell--desktop .transaction-item {
+  gap: calc(8px + 9 * var(--f));
+}
+
+.app-shell--desktop .transaction-icon {
+  width: calc(40px + 15 * var(--f));
+  height: calc(40px + 15 * var(--f));
+}
+
+.app-shell--desktop .transaction-icon img {
+  width: calc(20px + 8 * var(--f));
+  height: calc(20px + 8 * var(--f));
+}
+
+.app-shell--desktop .transaction-title {
+  font-size: calc(13px + 3 * var(--f));
+  line-height: calc(16px + 3 * var(--f));
+  margin-bottom: calc(3px + 4 * var(--f));
+}
+
+.app-shell--desktop .transaction-date {
+  font-size: calc(12px + 3 * var(--f));
+  line-height: calc(15px + 3 * var(--f));
+}
+
+.app-shell--desktop .transaction-amount {
+  font-size: calc(11px + 5 * var(--f));
+  line-height: calc(13px + 6 * var(--f));
+}
+
+.app-shell--desktop .recent-transactions .transaction-icon {
+  width: 50px;
+  height: 50px;
+}
+
+.app-shell--desktop .recent-transactions .transaction-icon img {
+  width: 26px;
+  height: 26px;
+}
+
+.app-shell--desktop .recent-transactions .transaction-title {
+  font-size: calc(12px + 2 * var(--f));
+  line-height: calc(15px + 2 * var(--f));
+}
+
+.app-shell--desktop .recent-transactions .transaction-amount {
+  font-size: calc(10px + 3 * var(--f));
+  line-height: calc(12px + 3 * var(--f));
+}
+
+/* Weekly Activity / Expense / Balance */
+.app-shell--desktop .section-card--weekly {
+  height: calc(261px + 61 * var(--f));
+  padding: 20px calc(18px + 7 * var(--f)) calc(16px + 4 * var(--f));
+}
+
+.app-shell--desktop .weekly-chart {
+  --bar-w: calc(10px + 5 * var(--f));
+  --bar-gap: calc(8px + 4 * var(--f));
+  --x-band: calc(28px + 4 * var(--f));
+  --x-label-gap: calc(12px + 4 * var(--f));
+  --y-band: calc(24px + 4 * var(--f));
+  --y-font: calc(12px + 1 * var(--f));
+  --x-font: calc(12px + 1 * var(--f));
+  --y-gap: calc(8px + 2 * var(--f));
+  --plot-pad-top: calc(6px + 2 * var(--f));
+}
+
+.app-shell--desktop .section-card--weekly .chart-legend--in-card {
+  font-size: calc(13px + 2 * var(--f));
+  line-height: calc(16px + 2 * var(--f));
+  margin-bottom: calc(14px + 8 * var(--f));
+  gap: calc(16px + 14 * var(--f));
+}
+
+.app-shell--desktop .section-card--weekly .chart-legend--in-card .dot {
+  width: calc(12px + 3 * var(--f));
+  height: calc(12px + 3 * var(--f));
+}
+
+.app-shell--desktop .section-card--expense {
+  height: calc(261px + 61 * var(--f));
+  padding: calc(43px + -12 * var(--f)) calc(25px + 16 * var(--f));
+  --expense-chart-size: calc(181px + 88 * var(--f));
+  --expense-chart-ratio: 269 / 260;
+}
+
+.app-shell--desktop .section-card--balance {
+  height: calc(220px + 56 * var(--f));
+}
+
+.app-shell--desktop .balance-chart {
+  --plot-inset: calc(20px + 15 * var(--f)) calc(20px + 5 * var(--f)) calc(40px + 16 * var(--f))
+    calc(56px + 7 * var(--f));
+  --y-font: calc(12px + 1 * var(--f));
+  --x-font: calc(12px + 2 * var(--f));
+  --y-gap: calc(6px + 2 * var(--f));
+  --x-gap: calc(8px + 1 * var(--f));
+}
+
+/* Quick Transfer — tab group-457 → desktop group-322 */
+.app-shell--desktop .section-card--transfer {
+  height: calc(220px + 56 * var(--f));
+  padding: calc(31px + 4 * var(--f)) calc(15px + 10 * var(--f)) calc(15px + 10 * var(--f));
+  overflow: visible;
+}
+
+.app-shell--desktop .transfer-contacts {
+  gap: calc(15px + 13 * var(--f));
+  margin-bottom: calc(26px + 3 * var(--f));
+  overflow: visible;
+}
+
+.app-shell--desktop .transfer-contact[data-contact='livia-bator'] {
+  width: calc(60px + 25 * var(--f));
+}
+
+.app-shell--desktop .transfer-contact[data-contact='randy-press'] {
+  width: calc(71px + 23 * var(--f));
+}
+
+.app-shell--desktop .transfer-contact[data-contact='workman'] {
+  width: calc(54px + 17 * var(--f));
+}
+
+.app-shell--desktop .transfer-avatar {
+  width: calc(50px + 20 * var(--f));
+  height: calc(50px + 20 * var(--f));
+  margin-bottom: calc(12px + 3 * var(--f));
+}
+
+.app-shell--desktop .transfer-name {
+  font-size: calc(12px + 4 * var(--f));
+  line-height: calc(15px + 4 * var(--f));
+  margin-bottom: calc(1px + 4 * var(--f));
+  white-space: nowrap;
+}
+
+.app-shell--desktop .transfer-role {
+  font-size: calc(12px + 3 * var(--f));
+  line-height: calc(15px + 3 * var(--f));
+  white-space: nowrap;
+}
+
+.app-shell--desktop .transfer-next {
+  width: calc(40px + 10 * var(--f));
+  height: calc(40px + 10 * var(--f));
+}
+
+.app-shell--desktop .transfer-form {
+  gap: calc(20px + 7 * var(--f));
+}
+
+.app-shell--desktop .transfer-form-label {
+  flex: 0 0 calc(77px + 26 * var(--f));
+  font-size: calc(12px + 4 * var(--f));
+  line-height: calc(15px + 4 * var(--f));
+}
+
+.app-shell--desktop .amount-composite {
+  flex: 1 1 calc(168px + 97 * var(--f));
+  min-width: calc(168px + 97 * var(--f));
+  max-width: none;
+  height: calc(40px + 10 * var(--f));
+}
+
+.app-shell--desktop .amount-composite input {
+  font-size: calc(12px + 4 * var(--f));
+  padding: 0 calc(103px + 27 * var(--f)) 0 calc(15px + 15 * var(--f));
+}
+
+.app-shell--desktop .amount-composite .send-btn {
+  height: calc(40px + 10 * var(--f));
+  width: calc(100px + 25 * var(--f));
+  min-width: 0;
+  font-size: calc(13px + 3 * var(--f));
+  padding: 0 calc(14px + 10 * var(--f)) 0 calc(16px + 8 * var(--f));
+  gap: calc(9px + 2 * var(--f));
+  justify-content: flex-start;
+}
+
+/* Narrow tablet 640–749 — expense + quick share a row; content scales with column width (cqi) */
+@media (min-width: 640px) and (max-width: 749px) {
+  .app-shell--tablet .dashboard-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      'cards cards'
+      'weekly weekly'
+      'transactions transactions'
+      'expense quick'
+      'balance balance';
+  }
+
+  .app-shell--tablet .dashboard-row-bottom {
+    display: contents;
+  }
+
+  .app-shell--tablet .quick-transfer {
+    grid-area: quick;
+    min-width: 0;
+    container-type: inline-size;
+    container-name: dash-quick;
+  }
+
+  .app-shell--tablet .expense-stats {
+    min-width: 0;
+    container-type: inline-size;
+    container-name: dash-expense;
+  }
+
+  .app-shell--tablet .balance-history {
+    grid-area: balance;
+    min-width: 0;
+  }
+
+  .app-shell--tablet .my-cards__row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 26px;
+    overflow: visible;
+  }
+
+  .app-shell--tablet .section-card--expense {
+    height: 200px;
+    padding: 16px clamp(8px, 5cqi, 25px);
+    justify-content: center;
+    --expense-chart-size: min(100%, clamp(96px, 64cqi, 168px));
+  }
+
+  .app-shell--tablet .section-card--transfer {
+    height: 200px;
+    padding: 16px clamp(14px, 6cqi, 22px);
+    overflow: visible;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .app-shell--tablet .transfer-contacts {
+    gap: clamp(4px, 2.5cqi, 15px);
+    margin-bottom: clamp(14px, 6cqi, 26px);
+    overflow: visible;
+    flex-wrap: nowrap;
+    max-width: 100%;
+  }
+
+  .app-shell--tablet .transfer-contacts::-webkit-scrollbar {
+    display: none;
+  }
+
+  .app-shell--tablet .transfer-contact,
+  .app-shell--tablet .transfer-contact[data-contact='livia-bator'],
+  .app-shell--tablet .transfer-contact[data-contact='randy-press'],
+  .app-shell--tablet .transfer-contact[data-contact='workman'] {
+    width: auto;
+    flex: 0 1 auto;
+    min-width: 0;
+    max-width: clamp(42px, 22cqi, 71px);
+  }
+
+  .app-shell--tablet .transfer-avatar {
+    width: clamp(32px, 16cqi, 50px);
+    height: clamp(32px, 16cqi, 50px);
+    margin-bottom: clamp(2px, 1.5cqi, 8px);
+  }
+
+  .app-shell--tablet .transfer-name {
+    font-size: clamp(9px, 4.2cqi, 12px);
+    line-height: 1.2;
+    margin-bottom: 1px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .app-shell--tablet .transfer-role {
+    font-size: clamp(8px, 3.8cqi, 12px);
+    line-height: 1.2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .app-shell--tablet .transfer-next {
+    width: clamp(28px, 12cqi, 40px);
+    height: clamp(28px, 12cqi, 40px);
+    flex-shrink: 0;
+  }
+
+  .app-shell--tablet .transfer-form {
+    flex-direction: column;
+    align-items: stretch;
+    gap: clamp(6px, 2cqi, 10px);
+  }
+
+  .app-shell--tablet .transfer-form-label {
+    flex: none;
+    font-size: clamp(9px, 4cqi, 12px);
+    line-height: 1.2;
+  }
+
+  .app-shell--tablet .amount-composite {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 100%;
+    height: clamp(32px, 14cqi, 40px);
+  }
+
+  .app-shell--tablet .amount-composite input {
+    font-size: clamp(10px, 4cqi, 12px);
+    padding: 0 clamp(72px, 32cqi, 103px) 0 clamp(8px, 4cqi, 15px);
+  }
+
+  .app-shell--tablet .amount-composite .send-btn {
+    height: 100%;
+    width: clamp(72px, 32cqi, 100px);
+    min-width: clamp(72px, 32cqi, 100px);
+    font-size: clamp(10px, 4cqi, 13px);
+    padding: 0 clamp(6px, 2cqi, 14px);
+    gap: 4px;
+  }
+
+  .app-shell--tablet .section-card--transactions {
+    height: 240px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px 18px;
+  }
+
+  .app-shell--tablet .section-card--balance {
+    height: 220px;
+  }
+
+  .app-shell--tablet .transaction-list {
+    gap: 12px;
+  }
+
+  .app-shell--tablet .transaction-item {
+    gap: 15px;
+    height: 50px;
+  }
+
+  .app-shell--tablet .transaction-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .app-shell--tablet .transaction-icon img {
+    width: 25px;
+    height: 25px;
+  }
+
+  .app-shell--tablet .transaction-title {
+    font-size: 14px;
+    line-height: 17px;
+    margin-bottom: 4px;
+  }
+
+  .app-shell--tablet .transaction-date {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .app-shell--tablet .transaction-amount {
+    font-size: 11px;
+    line-height: 13px;
+  }
+}
+
+/* Narrow tablet 750–899 — row 3 is 50/50; bottom row shares width by Figma ratio (not 50/50) */
+@media (min-width: 750px) and (max-width: 899px) {
+  .app-shell--tablet .dashboard-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      'cards cards'
+      'weekly weekly'
+      'transactions expense'
+      'bottom bottom';
+  }
+
+  .app-shell--tablet .my-cards__row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 26px;
+    overflow: visible;
+  }
+
+  .app-shell--tablet .dashboard-row-bottom {
+    display: grid;
+    grid-template-columns: minmax(0, 295fr) minmax(0, 423fr);
+    grid-template-areas: 'quick balance';
+    align-items: stretch;
+    min-width: 0;
+    width: 100%;
+  }
+
+  .app-shell--tablet .dashboard-row-bottom .quick-transfer {
+    grid-area: quick;
+    min-width: 0;
+    container-type: inline-size;
+    container-name: dash-quick;
+  }
+
+  .app-shell--tablet .dashboard-row-bottom .balance-history {
+    grid-area: balance;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .app-shell--tablet .dashboard-row-bottom .section-card--transfer,
+  .app-shell--tablet .dashboard-row-bottom .section-card--balance {
+    flex: 1;
+    height: auto;
+    min-height: 248px;
+    box-sizing: border-box;
+  }
+
+  .app-shell--tablet .dashboard-row-bottom .section-card--transfer {
+    padding: 22px 12px;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .app-shell--tablet .dashboard-row-bottom .section-card--balance {
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .app-shell--tablet .dashboard-row-bottom .transfer-contacts {
+    gap: clamp(8px, 3.5cqi, 15px);
+    margin-bottom: clamp(16px, 7cqi, 26px);
+    overflow: visible;
+    max-width: 100%;
+    flex-wrap: nowrap;
+  }
+
+  .app-shell--tablet .dashboard-row-bottom .transfer-contacts::-webkit-scrollbar {
+    display: none;
+  }
+
+  .app-shell--tablet .dashboard-row-bottom .transfer-contact,
+  .app-shell--tablet .dashboard-row-bottom .transfer-contact[data-contact='livia-bator'],
+  .app-shell--tablet .dashboard-row-bottom .transfer-contact[data-contact='randy-press'],
+  .app-shell--tablet .dashboard-row-bottom .transfer-contact[data-contact='workman'] {
+    width: auto;
+    flex: 0 1 auto;
+    min-width: 0;
+    max-width: clamp(48px, 20cqi, 71px);
+  }
+
+  .app-shell--tablet .dashboard-row-bottom .transfer-avatar {
+    width: clamp(40px, 17cqi, 50px);
+    height: clamp(40px, 17cqi, 50px);
+    margin-bottom: clamp(4px, 2cqi, 10px);
+  }
+
+  .app-shell--tablet .dashboard-row-bottom .transfer-name {
+    font-size: clamp(10px, 4.2cqi, 12px);
+    line-height: 15px;
+    margin-bottom: 1px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .app-shell--tablet .dashboard-row-bottom .transfer-role {
+    font-size: clamp(9px, 3.8cqi, 12px);
+    line-height: 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .app-shell--tablet .dashboard-row-bottom .transfer-next {
+    width: clamp(32px, 14cqi, 40px);
+    height: clamp(32px, 14cqi, 40px);
+  }
+
+  .app-shell--tablet .dashboard-row-bottom .transfer-form {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .app-shell--tablet .dashboard-row-bottom .transfer-form-label {
+    flex: none;
+    font-size: clamp(10px, 4cqi, 12px);
+    line-height: 15px;
+  }
+
+  .app-shell--tablet .dashboard-row-bottom .amount-composite {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 100%;
+    height: 40px;
+  }
+
+  .app-shell--tablet .dashboard-row-bottom .amount-composite input {
+    padding: 0 92px 0 12px;
+    font-size: 12px;
+  }
+
+  .app-shell--tablet .dashboard-row-bottom .amount-composite .send-btn {
+    width: 92px;
+    min-width: 92px;
+    height: 40px;
+    font-size: 12px;
+    padding: 0 10px 0 12px;
+    gap: 6px;
+  }
+
+  .app-shell--tablet .section-card--transactions,
+  .app-shell--tablet .section-card--expense {
+    height: 261px;
+  }
+
+  .app-shell--tablet .section-card--transactions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px 18px;
+  }
+
+  .app-shell--tablet .transaction-list {
+    gap: 12px;
+  }
+
+  .app-shell--tablet .transaction-item {
+    gap: 15px;
+    height: 50px;
+  }
+
+  .app-shell--tablet .transaction-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .app-shell--tablet .transaction-icon img {
+    width: 25px;
+    height: 25px;
+  }
+
+  .app-shell--tablet .transaction-title {
+    font-size: 14px;
+    line-height: 17px;
+    margin-bottom: 4px;
+  }
+
+  .app-shell--tablet .transaction-date {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .app-shell--tablet .transaction-amount {
+    font-size: 11px;
+    line-height: 13px;
+  }
+}

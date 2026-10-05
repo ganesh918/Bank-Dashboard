@@ -1,0 +1,62 @@
+/* Inter 3.19 (OFL) — the version Figma renders with; Inter 4 has different digit widths and spacing. */
+@font-face {
+  font-family: 'BankDash Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src:
+    url('../assets/fonts/inter3-400.woff2') format('woff2'),
+    url('../assets/fonts/inter3-400.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'BankDash Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src:
+    url('../assets/fonts/inter3-500.woff2') format('woff2'),
+    url('../assets/fonts/inter3-500.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'BankDash Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src:
+    url('../assets/fonts/inter3-600.woff2') format('woff2'),
+    url('../assets/fonts/inter3-600.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'BankDash Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src:
+    url('../assets/fonts/inter3-700.woff2') format('woff2'),
+    url('../assets/fonts/inter3-700.woff') format('woff');
+}
+
+/* Lato 2.0 (OFL) — Figma card text uses Lato Regular / Semibold.
+   Unique family name so a locally installed Lato 1.x never replaces the bundled files. */
+@font-face {
+  font-family: 'BankDash Lato';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src:
+    url('../assets/fonts/lato-normal.woff2') format('woff2'),
+    url('../assets/fonts/lato-normal.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'BankDash Lato';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src:
+    url('../assets/fonts/lato-semibold.woff2') format('woff2'),
+    url('../assets/fonts/lato-semibold.woff') format('woff');
+}

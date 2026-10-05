@@ -1,0 +1,29 @@
+/**
+ * Viewport fallback for mobile shell only.
+ * Grid columns are driven by @container dash-main in dashboard.css.
+ */
+@media (max-width: 639px) {
+  .app-shell--mobile .my-cards__row {
+    width: calc(100% + 25px);
+    max-width: calc(100% + 25px);
+    margin-right: -25px;
+    padding-right: 0;
+    box-sizing: border-box;
+  }
+
+  .app-shell--mobile .dashboard-grid {
+    gap: 24px;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'cards'
+      'transactions'
+      'weekly'
+      'expense'
+      'bottom';
+  }
+
+  .app-shell--mobile .dashboard-row-bottom {
+    gap: 24px;
+    grid-template-columns: 1fr;
+  }
+}

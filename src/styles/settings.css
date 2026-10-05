@@ -1,0 +1,493 @@
+/* Settings — Figma 112:279/504/699 (1440) · 163:753/1191/1463 (1024) · 199:598/815 + 201:2 (375)
+   Sizes live in custom properties: tab frame values by default, desktop interpolates tab → desktop with --f. */
+
+.app-shell--tablet .set-main {
+  padding: 25px 25px 40px;
+}
+
+.app-shell--desktop .set-main {
+  padding-top: calc(25px + 5 * var(--f));
+}
+
+.app-shell--mobile .set-main {
+  padding: 25px 25px 40px;
+}
+
+.set-card {
+  --pad-t: 25px;
+  --pad-x: 25px;
+  --pad-b: 25px;
+  --radius: 20px;
+  --tab-font: 12px;
+  --tab-lh: 15px;
+  --tab-w: 94px;
+  --tab-gap-2: 33px;
+  --tab-gap-3: 25px;
+  --tab-mt: 0px;
+  --tab-pb: 11px;
+  --ul-h: 3px;
+  --label-font: 13px;
+  --label-lh: 16px;
+  --label-mb: 7px;
+  --input-h: 40px;
+  --input-r: 15px;
+  --input-font: 12px;
+  --input-lh: 15px;
+  --input-px: 15px;
+  --row-gap: 14px;
+  --col-gap: 26px;
+  --head-font: 14px;
+  --head-lh: 17px;
+  --tg-w: 44px;
+  --tg-h: 24px;
+  --tg-knob: 21px;
+  --tg-gap: 16px;
+  --tg-font: 13px;
+  --tg-lh: 16px;
+  --tg-row-gap: 15px;
+  --save-w: 130px;
+  --save-h: 40px;
+  --save-r: 9px;
+  --save-font: 15px;
+  --save-lh: 18px;
+
+  padding: var(--pad-t) var(--pad-x) var(--pad-b);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  box-sizing: border-box;
+}
+
+.app-shell--desktop .set-card {
+  --pad-t: calc(25px + 5 * var(--f));
+  --pad-x: calc(25px + 5 * var(--f));
+  --pad-b: calc(25px + 5 * var(--f));
+  --radius: calc(20px + 5 * var(--f));
+  --tab-font: calc(12px + 4 * var(--f));
+  --tab-lh: calc(15px + 4 * var(--f));
+  --tab-w: calc(94px + 20 * var(--f));
+  --tab-gap-2: calc(33px + 13 * var(--f));
+  --tab-gap-3: calc(25px + 16 * var(--f));
+  --tab-mt: calc(7 * var(--f));
+  --tab-pb: calc(11px - 1 * var(--f));
+  --label-font: calc(13px + 3 * var(--f));
+  --label-lh: calc(16px + 3 * var(--f));
+  --label-mb: calc(7px + 4 * var(--f));
+  --input-h: calc(40px + 10 * var(--f));
+  --input-font: calc(12px + 3 * var(--f));
+  --input-lh: calc(15px + 3 * var(--f));
+  --input-px: calc(15px + 5 * var(--f));
+  --row-gap: calc(14px + 8 * var(--f));
+  --col-gap: calc(26px + 3 * var(--f));
+  --head-font: calc(14px + 3 * var(--f));
+  --head-lh: calc(17px + 4 * var(--f));
+  --tg-w: calc(44px + 12 * var(--f));
+  --tg-h: calc(24px + 7 * var(--f));
+  --tg-knob: calc(21px + 6 * var(--f));
+  --tg-gap: calc(16px + 4 * var(--f));
+  --tg-font: calc(13px + 3 * var(--f));
+  --tg-lh: calc(16px + 3 * var(--f));
+  --save-w: calc(130px + 60 * var(--f));
+  --save-h: calc(40px + 10 * var(--f));
+  --save-r: calc(9px + 6 * var(--f));
+  --save-font: calc(15px + 3 * var(--f));
+  --save-lh: calc(18px + 4 * var(--f));
+}
+
+.app-shell--mobile .set-card {
+  --pad-t: 22px;
+  --pad-x: 20px;
+  --radius: 15px;
+  --tab-font: 13px;
+  --tab-lh: 16px;
+  --tab-pb: 8px;
+  --ul-h: 2px;
+  --label-mb: 9px;
+  --input-r: 10px;
+  --row-gap: 16px;
+  --tg-gap: 12px;
+  --tg-row-gap: 18px;
+  --save-w: 100%;
+}
+
+/* ─── Tabs ─── */
+.set-tabs {
+  display: flex;
+  margin-top: var(--tab-mt);
+  border-bottom: 1px solid var(--color-table-divider);
+}
+
+.set-tab {
+  position: relative;
+  width: var(--tab-w);
+  padding: 0 0 var(--tab-pb);
+  border: 0;
+  background: none;
+  color: var(--color-muted);
+  font: inherit;
+  font-size: var(--tab-font);
+  line-height: var(--tab-lh);
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.set-tab--preferences { margin-left: var(--tab-gap-2); }
+.set-tab--security { margin-left: var(--tab-gap-3); }
+
+.set-tab.is-active {
+  color: var(--color-primary);
+}
+
+.set-tab.is-active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: var(--ul-h);
+  border-radius: 10px 10px 0 0;
+  background: var(--color-primary);
+}
+
+.set-tab:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.set-tab__short { display: none; }
+
+/* Mobile: 80 · 80 · 67px tabs spread across the 285px card ("Preference" label) */
+.app-shell--mobile .set-tabs {
+  justify-content: space-between;
+}
+
+.app-shell--mobile .set-tab { width: 80px; margin-left: 0; }
+.app-shell--mobile .set-tab--security { width: 67px; }
+.app-shell--mobile .set-tab__full { display: none; }
+.app-shell--mobile .set-tab__short { display: inline; }
+
+/* ─── Panels: top gap under the tab rule and Save offset follow each frame ─── */
+.set-panel {
+  --panel-mt: 31px;
+  --save-mt: 25px;
+  padding-top: var(--panel-mt);
+}
+
+.set-panel--profile { --panel-mt: 41px; }
+.set-panel--preferences { --save-mt: 54px; }
+
+.app-shell--desktop .set-panel { --panel-mt: calc(31px + 6 * var(--f)); --save-mt: calc(25px + 5 * var(--f)); }
+.app-shell--desktop .set-panel--profile { --panel-mt: calc(41px + 11 * var(--f)); }
+.app-shell--desktop .set-panel--preferences { --panel-mt: calc(31px + 11 * var(--f)); --save-mt: calc(54px + 18 * var(--f)); }
+
+.app-shell--mobile .set-panel { --panel-mt: 21px; --save-mt: 20px; }
+.app-shell--mobile .set-panel--profile { --panel-mt: 25px; }
+.app-shell--mobile .set-panel--preferences { --panel-mt: 22px; --save-mt: 17px; }
+
+/* ─── Fields ─── */
+.set-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--row-gap) var(--col-gap);
+}
+
+.set-fields--prefs {
+  --col-gap: 25px;
+}
+
+.app-shell--desktop .set-fields--prefs,
+.app-shell--desktop .set-fields--security {
+  --col-gap: calc(25px + 5 * var(--f));
+}
+
+.set-fields--security {
+  --col-gap: 25px;
+}
+
+.set-fields--security .set-field {
+  grid-column: 1;
+}
+
+.set-field {
+  min-width: 0;
+}
+
+.set-field__label {
+  display: block;
+  margin-bottom: var(--label-mb);
+  font-size: var(--label-font);
+  line-height: var(--label-lh);
+  color: var(--color-dark);
+}
+
+.set-field__control {
+  position: relative;
+}
+
+.set-field__input {
+  width: 100%;
+  height: var(--input-h);
+  padding: 0 var(--input-px);
+  border: 1px solid var(--color-border);
+  border-radius: var(--input-r);
+  background: var(--color-surface);
+  color: var(--color-muted);
+  font: inherit;
+  font-size: var(--input-font);
+  line-height: var(--input-lh);
+  text-overflow: ellipsis;
+  box-sizing: border-box;
+}
+
+.set-field__input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.set-field:has(.set-field__chevron) .set-field__input {
+  padding-right: calc(var(--input-px) * 2 + 12px);
+}
+
+/* Chevron: 10×5 at 20px from the right (tab) · 12×6 at 25px (desktop) · 10×5 at 20px (mobile) */
+.set-field__chevron {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  width: 10px;
+  height: 5px;
+  color: var(--color-muted);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.app-shell--desktop .set-field__chevron {
+  right: calc(20px + 5 * var(--f));
+  width: calc(10px + 2 * var(--f));
+  height: calc(5px + 1 * var(--f));
+}
+
+/* ─── Edit profile: avatar column + 2-column form ─── */
+.set-profile {
+  --avatar: 110px;
+  --avatar-gap: 45px;
+  --pen: 25px;
+  --pen-icon: 12px;
+  --pen-right: -3px;
+  --pen-bottom: 13px;
+  display: grid;
+  grid-template-columns: var(--avatar) minmax(0, 1fr);
+  column-gap: var(--avatar-gap);
+  align-items: start;
+}
+
+.app-shell--desktop .set-profile {
+  --avatar: calc(110px + 20 * var(--f));
+  --avatar-gap: calc(45px + 10 * var(--f));
+  --pen: calc(25px + 5 * var(--f));
+  --pen-icon: calc(12px + 3 * var(--f));
+  --pen-right: calc(-3px + 1 * var(--f));
+  --pen-bottom: calc(13px + 3 * var(--f));
+}
+
+.set-avatar {
+  position: relative;
+  width: var(--avatar);
+  height: var(--avatar);
+  margin-top: 4px;
+}
+
+.app-shell--desktop .set-avatar {
+  margin-top: calc(4px - 1 * var(--f));
+}
+
+.set-avatar__img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.set-avatar__edit {
+  position: absolute;
+  right: var(--pen-right);
+  bottom: var(--pen-bottom);
+  display: grid;
+  place-items: center;
+  width: var(--pen);
+  height: var(--pen);
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-primary);
+  cursor: pointer;
+}
+
+.set-avatar__edit img {
+  width: var(--pen-icon);
+  height: var(--pen-icon);
+}
+
+/* ─── Section headings + toggles ─── */
+.set-heading {
+  margin: 0 0 16px;
+  font-size: var(--head-font);
+  line-height: var(--head-lh);
+  font-weight: 600;
+  color: var(--color-heading);
+}
+
+.set-heading--notify {
+  margin: 21px 0 17px;
+}
+
+.set-heading--password {
+  margin: 22px 0 13px;
+}
+
+.app-shell--desktop .set-heading { margin-bottom: calc(16px + 3 * var(--f)); }
+.app-shell--desktop .set-heading--notify { margin: calc(21px + 6 * var(--f)) 0 calc(17px + 2 * var(--f)); }
+.app-shell--desktop .set-heading--password { margin: calc(22px + 5 * var(--f)) 0 calc(13px + 3 * var(--f)); }
+
+.app-shell--mobile .set-heading { margin-bottom: 12px; }
+.app-shell--mobile .set-heading--notify { margin: 22px 0 13px; }
+.app-shell--mobile .set-heading--password { margin: 19px 0 14px; }
+
+.set-toggles {
+  display: grid;
+  gap: var(--tg-row-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.set-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--tg-gap);
+  min-height: var(--tg-h);
+}
+
+.set-switch {
+  position: relative;
+  flex: 0 0 var(--tg-w);
+  width: var(--tg-w);
+  height: var(--tg-h);
+  min-width: var(--tg-w);
+  min-height: var(--tg-h);
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: var(--color-border);
+  cursor: pointer;
+  overflow: hidden;
+  box-sizing: border-box;
+  transition: background-color 0.2s ease;
+}
+
+.set-switch.is-on {
+  background: var(--color-primary);
+}
+
+.set-switch__knob {
+  position: absolute;
+  top: 50%;
+  left: 2px;
+  width: var(--tg-knob);
+  height: var(--tg-knob);
+  border-radius: 50%;
+  background: var(--color-surface);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transform: translateY(-50%);
+  transition: left 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+}
+
+.set-switch.is-on .set-switch__knob {
+  left: calc(100% - var(--tg-knob) - 2px);
+  transform: translateY(-50%);
+}
+
+.set-switch:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.set-toggle__label {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--tg-font);
+  line-height: var(--tg-lh);
+  color: var(--color-dark);
+  align-self: center;
+}
+
+/* ─── Save ─── */
+.set-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--save-mt);
+}
+
+.set-save {
+  width: var(--save-w);
+  height: var(--save-h);
+  padding: 0;
+  border: 0;
+  border-radius: var(--save-r);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font: inherit;
+  font-size: var(--save-font);
+  line-height: var(--save-lh);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.set-save:hover {
+  background: var(--color-accent);
+}
+
+.set-save:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* 640–825: the avatar moves above the form; Preferences fields stack once a column
+   would drop under 250px so the time-zone value stays readable */
+@media (min-width: 640px) and (max-width: 825px) {
+  .app-shell--tablet .set-profile {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 25px;
+  }
+
+  .app-shell--tablet .set-avatar {
+    justify-self: center;
+    margin-top: 0;
+  }
+
+  .app-shell--tablet .set-fields--prefs {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+}
+
+/* Mobile: centred 170px avatar, one column of 285px fields, full-width Save */
+.app-shell--mobile .set-profile {
+  --avatar: 170px;
+  --pen: 39px;
+  --pen-icon: 19px;
+  --pen-right: -5px;
+  --pen-bottom: 20px;
+  grid-template-columns: minmax(0, 1fr);
+  row-gap: 22px;
+}
+
+.app-shell--mobile .set-avatar {
+  justify-self: center;
+  margin-top: 0;
+}
+
+.app-shell--mobile .set-fields {
+  grid-template-columns: minmax(0, 1fr);
+}

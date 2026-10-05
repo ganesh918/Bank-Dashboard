@@ -1,0 +1,381 @@
+/* Services — Figma 112:941 (1440) / 163:2 (1024) / 199:2 (375)
+   Desktop values interpolate tab → desktop with --f (see tokens.css). */
+
+.app-shell--tablet .svc-main {
+  padding: 25px 25px 40px;
+}
+
+.app-shell--desktop .svc-main {
+  padding-top: calc(25px + 5 * var(--f));
+}
+
+.app-shell--mobile .svc-main {
+  padding: 25px 0 40px;
+}
+
+.svc-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  row-gap: 20px;
+}
+
+.app-shell--desktop .svc-grid {
+  row-gap: calc(20px + 4 * var(--f));
+}
+
+.app-shell--mobile .svc-grid {
+  row-gap: 22px;
+}
+
+.svc-list {
+  min-width: 0;
+}
+
+.app-shell--desktop .svc-list .section-head {
+  margin-bottom: calc(16px + 12 * var(--f));
+}
+
+.app-shell--mobile .svc-list .section-head {
+  margin-bottom: 12px;
+  padding: 0 25px;
+}
+
+/* ─── Highlight cards: 350×120 / 231×90 / 230×85 strip; icon + copy centred ─── */
+.svc-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 25px;
+}
+
+.app-shell--desktop .svc-stats {
+  gap: calc(25px + 5 * var(--f));
+}
+
+.svc-stat {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-width: 0;
+  height: 90px;
+  padding: 0 10px;
+  border-radius: 20px;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  box-sizing: border-box;
+}
+
+.svc-stat__icon {
+  flex: 0 0 50px;
+  display: grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.svc-stat__icon img {
+  width: 20px;
+  height: 20px;
+}
+
+.svc-stat__copy {
+  min-width: 0;
+}
+
+.svc-stat__title {
+  margin: 0 0 4px;
+  font-size: 16px;
+  line-height: 19px;
+  font-weight: 600;
+  color: var(--color-dark);
+  white-space: nowrap;
+}
+
+.svc-stat__subtitle {
+  margin: 0;
+  font-size: 12px;
+  line-height: 15px;
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+
+.app-shell--desktop .svc-stat {
+  gap: calc(12px + 10 * var(--f));
+  height: calc(90px + 30 * var(--f));
+  border-radius: calc(20px + 5 * var(--f));
+}
+
+.app-shell--desktop .svc-stat__icon {
+  flex-basis: calc(50px + 20 * var(--f));
+  width: calc(50px + 20 * var(--f));
+  height: calc(50px + 20 * var(--f));
+}
+
+.app-shell--desktop .svc-stat__icon img {
+  width: calc(20px + 10 * var(--f));
+  height: calc(20px + 10 * var(--f));
+}
+
+.app-shell--desktop .svc-stat__title {
+  margin-bottom: calc(4px + 4 * var(--f));
+  font-size: calc(16px + 4 * var(--f));
+  line-height: calc(19px + 5 * var(--f));
+}
+
+.app-shell--desktop .svc-stat__subtitle {
+  font-size: calc(12px + 4 * var(--f));
+  line-height: calc(15px + 4 * var(--f));
+}
+
+/* The scroller clips on both axes, so it carries room for the card shadow and cancels it with margins */
+.app-shell--mobile .svc-stats {
+  display: flex;
+  gap: 15px;
+  margin: -16px 0 -22px;
+  padding: 16px 25px 22px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scroll-padding: 0 25px;
+  scrollbar-width: none;
+}
+
+.app-shell--mobile .svc-stats::-webkit-scrollbar {
+  display: none;
+}
+
+.app-shell--mobile .svc-stat {
+  flex: 0 0 230px;
+  height: 85px;
+  border-radius: 15px;
+  scroll-snap-align: start;
+}
+
+.app-shell--mobile .svc-stat__icon {
+  flex-basis: 45px;
+  width: 45px;
+  height: 45px;
+}
+
+/* ─── Bank services list ───
+   Tracks follow the Figma x-offsets: text 69/95, details 229·355·481 (tab) and 338·536·734 (desktop),
+   button 120×30 / 150×35 with 20/30px right inset. */
+.svc-list__rows {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.svc-row {
+  display: grid;
+  grid-template-columns: 45px minmax(0, 172fr) minmax(0, 126fr) minmax(0, 126fr) minmax(0, 122fr) auto;
+  align-items: center;
+  min-height: 69px;
+  padding: 12px 20px 12px 12px;
+  border-radius: 15px;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  box-sizing: border-box;
+}
+
+.svc-row__icon {
+  display: grid;
+  place-items: center;
+  width: 45px;
+  height: 45px;
+  border-radius: 15px;
+}
+
+.svc-row__icon img {
+  width: 20px;
+  height: 20px;
+}
+
+.svc-row__info,
+.svc-row__detail {
+  min-width: 0;
+  padding-right: 8px;
+}
+
+.svc-row__info {
+  padding-left: 12px;
+}
+
+.svc-row__title {
+  margin: 0 0 4px;
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 500;
+  color: var(--color-dark);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.svc-row__subtitle {
+  margin: 0;
+  font-size: 12px;
+  line-height: 15px;
+  color: var(--color-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.svc-row__btn {
+  width: 120px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid var(--color-muted);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-muted);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.svc-row__btn.is-active,
+.svc-row__btn:hover,
+.svc-row__btn:focus-visible {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.svc-row__btn:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.app-shell--desktop .svc-list__rows {
+  gap: calc(10px + 10 * var(--f));
+}
+
+.app-shell--desktop .svc-row {
+  grid-template-columns:
+    calc(45px + 15 * var(--f)) minmax(0, 263fr) minmax(0, 198fr) minmax(0, 198fr) minmax(0, 196fr)
+    auto;
+  min-height: calc(69px + 21 * var(--f));
+  padding: calc(12px + 3 * var(--f)) calc(20px + 10 * var(--f)) calc(12px + 3 * var(--f))
+    calc(12px + 3 * var(--f));
+  border-radius: calc(15px + 5 * var(--f));
+}
+
+.app-shell--desktop .svc-row__icon {
+  width: calc(45px + 15 * var(--f));
+  height: calc(45px + 15 * var(--f));
+  border-radius: calc(15px + 5 * var(--f));
+}
+
+.app-shell--desktop .svc-row__icon img {
+  width: calc(20px + 5 * var(--f));
+  height: calc(20px + 5 * var(--f));
+}
+
+.app-shell--desktop .svc-row__info {
+  padding-left: calc(12px + 8 * var(--f));
+}
+
+.app-shell--desktop .svc-row__title {
+  margin-bottom: calc(4px + 3 * var(--f));
+  font-size: calc(13px + 3 * var(--f));
+  line-height: calc(16px + 3 * var(--f));
+}
+
+.app-shell--desktop .svc-row__subtitle {
+  font-size: calc(12px + 3 * var(--f));
+  line-height: calc(15px + 3 * var(--f));
+}
+
+.app-shell--desktop .svc-row__btn {
+  width: calc(120px + 30 * var(--f));
+  height: calc(30px + 5 * var(--f));
+  font-size: calc(12px + 3 * var(--f));
+}
+
+/* 640–825: three highlight cards can't fit side by side, so they become vertical tiles;
+   each service row splits into a title line and a details line underneath. */
+@media (min-width: 640px) and (max-width: 825px) {
+  .app-shell--tablet .svc-stats {
+    gap: 16px;
+  }
+
+  .app-shell--tablet .svc-stat {
+    flex-direction: column;
+    gap: 10px;
+    height: auto;
+    min-height: 140px;
+    padding: 18px 10px;
+    text-align: center;
+  }
+
+  .app-shell--tablet .svc-stat__title,
+  .app-shell--tablet .svc-stat__subtitle {
+    white-space: normal;
+  }
+
+  .app-shell--tablet .svc-row {
+    grid-template-columns: 45px repeat(3, minmax(0, 1fr));
+    grid-template-areas:
+      'icon info info btn'
+      'icon d1   d2   d3';
+    row-gap: 14px;
+    padding: 14px 20px 14px 12px;
+  }
+
+  .app-shell--tablet .svc-row__icon { grid-area: icon; }
+  .app-shell--tablet .svc-row__info { grid-area: info; }
+  .app-shell--tablet .svc-row__detail:nth-child(3) { grid-area: d1; }
+  .app-shell--tablet .svc-row__detail:nth-child(4) { grid-area: d2; }
+  .app-shell--tablet .svc-row__detail:nth-child(5) { grid-area: d3; }
+  .app-shell--tablet .svc-row__btn { grid-area: btn; justify-self: end; }
+
+  .app-shell--tablet .svc-row__detail {
+    padding-left: 12px;
+  }
+}
+
+/* Mobile: icon · title · "View Details" link (325×69 rows, 45px tile) */
+.app-shell--mobile .svc-list__rows {
+  padding: 0 25px;
+}
+
+.app-shell--mobile .svc-row {
+  grid-template-columns: 45px minmax(0, 1fr) auto;
+  padding: 12px 14px 12px 12px;
+  border-radius: 10px;
+}
+
+.app-shell--mobile .svc-row__icon {
+  border-radius: 12px;
+}
+
+.app-shell--mobile .svc-row__detail {
+  display: none;
+}
+
+.app-shell--mobile .svc-row__title {
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.app-shell--mobile .svc-row__title,
+.app-shell--mobile .svc-row__subtitle {
+  white-space: normal;
+}
+
+.app-shell--mobile .svc-row__btn,
+.app-shell--mobile .svc-row__btn.is-active {
+  width: auto;
+  height: auto;
+  border: 0;
+  color: var(--color-primary);
+}
+
+.app-shell--mobile .svc-row__btn:hover {
+  text-decoration: underline;
+}

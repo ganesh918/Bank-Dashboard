@@ -1,0 +1,1386 @@
+/* Accounts & Investments — Figma 101:0 / 152:269 / 185:58 & 104:60 / 152:1134 / 192:165 */
+
+.accounts-main,
+.investments-main {
+  container-type: inline-size;
+  container-name: dash-main;
+}
+
+.app-shell--tablet .accounts-main,
+.app-shell--tablet .investments-main {
+  padding: 20px 25px 40px 26px;
+}
+
+.app-shell--mobile .accounts-main,
+.app-shell--mobile .investments-main {
+  padding: 22px 0 40px;
+}
+
+.app-shell--mobile .accounts-main {
+  padding-top: 25px;
+}
+
+/* Mobile frame: 22px card → title, 19px title, 12px title → card */
+.app-shell--mobile .accounts-grid {
+  row-gap: 22px;
+}
+
+.app-shell--mobile .accounts-grid .section-head {
+  margin-bottom: 12px;
+  min-height: 19px;
+}
+
+/* ─── Stat cards ─── */
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+  height: 120px;
+  padding: 25px 20px 25px 41px;
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  box-sizing: border-box;
+}
+
+.stat-card__icon {
+  flex: 0 0 70px;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+}
+
+.stat-card__copy {
+  min-width: 0;
+}
+
+.stat-card__label {
+  margin: 0 0 7px;
+  font-size: 16px;
+  line-height: 19px;
+  font-weight: 400;
+  color: var(--color-muted);
+}
+
+.stat-card__value {
+  margin: 0;
+  font-size: 25px;
+  line-height: 30px;
+  font-weight: 400;
+  color: var(--color-dark);
+}
+
+.app-shell--tablet .stat-card {
+  height: 90px;
+  padding: 20px 16px 20px 22px;
+  gap: 12px;
+}
+
+.app-shell--tablet .stat-card__icon {
+  flex: 0 0 45px;
+  width: 45px;
+  height: 45px;
+}
+
+.app-shell--tablet .stat-card__icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.app-shell--tablet .stat-card__label {
+  font-size: 12px;
+  line-height: 15px;
+  margin-bottom: 4px;
+}
+
+.app-shell--tablet .stat-card__value {
+  font-size: 18px;
+  line-height: 22px;
+}
+
+.app-shell--mobile .stat-card {
+  height: 85px;
+  padding: 17px 15px 17px 17px;
+  gap: 10px;
+}
+
+.app-shell--mobile .stat-card__icon {
+  flex: 0 0 45px;
+  width: 45px;
+  height: 45px;
+}
+
+.app-shell--mobile .stat-card__label {
+  font-size: 12px;
+  line-height: 15px;
+}
+
+.app-shell--mobile .stat-card__value {
+  font-size: 16px;
+  line-height: 19px;
+}
+
+.app-shell--desktop .stat-card {
+  height: calc(90px + 30 * var(--f));
+  padding: calc(20px + 5 * var(--f)) calc(16px + 4 * var(--f)) calc(20px + 5 * var(--f))
+    calc(22px + 19 * var(--f));
+}
+
+.app-shell--desktop .stat-card__icon {
+  flex-basis: calc(45px + 25 * var(--f));
+  width: calc(45px + 25 * var(--f));
+  height: calc(45px + 25 * var(--f));
+}
+
+.app-shell--desktop .stat-card__label {
+  font-size: calc(12px + 4 * var(--f));
+  line-height: calc(15px + 4 * var(--f));
+}
+
+.app-shell--desktop .stat-card__value {
+  font-size: calc(18px + 7 * var(--f));
+  line-height: calc(22px + 8 * var(--f));
+}
+
+/* Accounts stat cards: Figma centres icon + copy inside 255×120 / 167×90 / 155×85 */
+.accounts-stats .stat-card {
+  justify-content: center;
+  gap: 12px;
+  height: 90px;
+  padding: 0 12px;
+}
+
+.accounts-stats .stat-card__icon {
+  flex: 0 0 50px;
+  width: 50px;
+  height: 50px;
+}
+
+.stat-card__glyph {
+  width: 20px;
+  height: 20px;
+}
+
+.accounts-stats .stat-card__label {
+  margin-bottom: 4px;
+  font-size: 12px;
+  line-height: 15px;
+  white-space: nowrap;
+}
+
+.accounts-stats .stat-card__value {
+  font-size: 16px;
+  line-height: 19px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.app-shell--mobile .accounts-stats .stat-card {
+  height: 85px;
+  gap: 10px;
+  padding: 0 10px;
+}
+
+.app-shell--mobile .accounts-stats .stat-card__icon {
+  flex-basis: 45px;
+  width: 45px;
+  height: 45px;
+}
+
+@media (max-width: 374px) {
+  .app-shell--mobile .accounts-stats .stat-card {
+    gap: 8px;
+    padding: 0 6px;
+  }
+
+  .app-shell--mobile .accounts-stats .stat-card__icon {
+    flex-basis: 36px;
+    width: 36px;
+    height: 36px;
+  }
+
+  .app-shell--mobile .stat-card__glyph {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.app-shell--desktop .accounts-stats .stat-card {
+  height: calc(90px + 30 * var(--f));
+  gap: calc(12px + 3 * var(--f));
+  padding: 0 calc(12px + 8 * var(--f));
+}
+
+.app-shell--desktop .accounts-stats .stat-card__icon {
+  flex-basis: calc(50px + 20 * var(--f));
+  width: calc(50px + 20 * var(--f));
+  height: calc(50px + 20 * var(--f));
+}
+
+.app-shell--desktop .stat-card__glyph {
+  width: calc(20px + 10 * var(--f));
+  height: calc(20px + 10 * var(--f));
+}
+
+.app-shell--desktop .accounts-stats .stat-card__label {
+  margin-bottom: calc(4px + 3 * var(--f));
+  font-size: calc(12px + 4 * var(--f));
+  line-height: calc(15px + 4 * var(--f));
+}
+
+.app-shell--desktop .accounts-stats .stat-card__value {
+  font-size: calc(16px + 9 * var(--f));
+  line-height: calc(19px + 11 * var(--f));
+}
+
+/* ─── Accounts grid ─── */
+.accounts-grid {
+  display: grid;
+  gap: var(--dash-row-gap, 20px) var(--dash-gap, 25px);
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    'stats'
+    'last'
+    'card'
+    'debit'
+    'invoices';
+}
+
+.accounts-stats {
+  grid-area: stats;
+  display: grid;
+  gap: var(--dash-row-gap, 20px) var(--dash-gap, 25px);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.accounts-last {
+  grid-area: last;
+}
+
+.accounts-card {
+  grid-area: card;
+}
+
+.accounts-debit {
+  grid-area: debit;
+}
+
+.accounts-invoices {
+  grid-area: invoices;
+}
+
+@container dash-main (min-width: 520px) {
+  .app-shell--tablet .accounts-grid,
+  .app-shell--desktop .accounts-grid {
+    grid-template-columns: minmax(0, 487fr) minmax(0, 231fr);
+    grid-template-areas:
+      'stats stats'
+      'last card'
+      'debit invoices';
+  }
+
+  .app-shell--tablet .accounts-stats,
+  .app-shell--desktop .accounts-stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.app-shell--desktop .accounts-grid {
+  grid-template-columns: minmax(0, 730fr) minmax(0, 350fr);
+}
+
+@media (min-width: 640px) and (max-width: 825px) {
+  /* Card column is half width until 300px, then the chart takes the extra space */
+  .app-shell--tablet .accounts-grid {
+    grid-template-columns: min(calc((100% - var(--dash-gap, 25px)) / 2), 300px) minmax(0, 1fr);
+    grid-template-areas:
+      'stats stats'
+      'last last'
+      'card debit'
+      'invoices invoices';
+  }
+
+  .app-shell--tablet .accounts-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* Credit card keeps the 231×170 tab proportions; contents scale with its width */
+  .app-shell--tablet .accounts-grid .accounts-card .credit-card {
+    height: auto;
+    aspect-ratio: 231 / 170;
+    padding: 7.36% 8.66% 0;
+  }
+
+  .app-shell--tablet .accounts-card .credit-card__label {
+    margin-bottom: 2.09cqi;
+    font-size: 5.24cqi;
+  }
+
+  .app-shell--tablet .accounts-card .credit-card__label--balance {
+    font-size: 5.76cqi;
+  }
+
+  .app-shell--tablet .accounts-card .credit-card__balance {
+    font-size: 8.38cqi;
+  }
+
+  .app-shell--tablet .accounts-card .credit-card__value {
+    font-size: 6.81cqi;
+  }
+
+  .app-shell--tablet .accounts-card .credit-card__number {
+    font-size: 7.85cqi;
+  }
+
+  .app-shell--tablet .accounts-card .credit-card__meta {
+    margin-top: 6.28cqi;
+    gap: 12.57cqi;
+  }
+
+  .app-shell--tablet .accounts-card .credit-card__chip {
+    width: 15.2cqi;
+    height: 15.2cqi;
+  }
+
+  .app-shell--tablet .accounts-card .credit-card__footer {
+    height: 26.7cqi;
+    margin-left: -10.47cqi;
+    margin-right: -10.47cqi;
+    padding: 0 10.47cqi;
+  }
+
+  .app-shell--tablet .accounts-card .credit-card__brand span {
+    width: 9.42cqi;
+    height: 9.42cqi;
+  }
+
+  .app-shell--tablet .accounts-card .credit-card__brand span:last-child {
+    margin-left: -4.71cqi;
+  }
+
+  /* Chart card matches the credit card height; the plot absorbs the difference */
+  .app-shell--tablet .accounts-debit__summary {
+    display: none;
+  }
+
+  .app-shell--tablet .accounts-debit__top {
+    justify-content: flex-end;
+  }
+
+  .app-shell--tablet .accounts-debit__legend {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 6px 14px;
+  }
+
+  .app-shell--tablet .accounts-debit__legend-item {
+    gap: 8px;
+  }
+
+  .app-shell--tablet .accounts-debit__legend-value {
+    display: inline;
+    margin-left: -3px;
+  }
+
+  .app-shell--tablet .accounts-debit__plot {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  .app-shell--tablet .accounts-debit__stage {
+    flex: 1 1 0;
+    height: auto;
+    min-height: 0;
+  }
+}
+
+/* ─── Investments grid ───
+   Rows: stats (3 equal) · charts 50/50 (540|540, 359|359) · lists 635|445 desktop, 423|295 tab */
+.investments-grid,
+.investments-row {
+  display: grid;
+  gap: var(--dash-row-gap, 20px) var(--dash-gap, 25px);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.investments-stats {
+  display: grid;
+  gap: var(--dash-row-gap, 20px) var(--dash-gap, 25px);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.investments-row > .section {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.app-shell--mobile .investments-main {
+  padding-top: 25px;
+}
+
+.app-shell--mobile .investments-grid,
+.app-shell--mobile .investments-row {
+  row-gap: 22px;
+}
+
+.app-shell--mobile .investments-grid .section-head {
+  margin-bottom: 12px;
+}
+
+@container dash-main (min-width: 520px) {
+  .app-shell--tablet .investments-stats,
+  .app-shell--desktop .investments-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .app-shell--tablet .investments-row--charts,
+  .app-shell--desktop .investments-row--charts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* 423:295 (tab) and 635:445 (desktop) are the same 0.59 split */
+  .app-shell--tablet .investments-row--lists,
+  .app-shell--desktop .investments-row--lists {
+    grid-template-columns: minmax(0, 423fr) minmax(0, 295fr);
+  }
+}
+
+/* Investments stat cards: icon + copy centred in 350×120 / 231×90 / 325×85 */
+.investments-stats .stat-card {
+  justify-content: center;
+  gap: 12px;
+  height: 90px;
+  padding: 0 12px;
+}
+
+.investments-stats .stat-card__icon {
+  flex: 0 0 50px;
+  width: 50px;
+  height: 50px;
+}
+
+.investments-stats .stat-card__label {
+  margin-bottom: 4px;
+  font-size: 12px;
+  line-height: 15px;
+  white-space: nowrap;
+}
+
+.investments-stats .stat-card__value {
+  font-size: 16px;
+  line-height: 19px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Mobile frame: icon starts 50px in on every card so the three rows line up */
+.app-shell--mobile .investments-stats .stat-card {
+  justify-content: flex-start;
+  height: 85px;
+  padding: 0 12px 0 50px;
+}
+
+.app-shell--mobile .investments-stats .stat-card__icon {
+  flex-basis: 45px;
+  width: 45px;
+  height: 45px;
+}
+
+.app-shell--desktop .investments-stats .stat-card {
+  height: calc(90px + 30 * var(--f));
+  gap: calc(12px + 3 * var(--f));
+  padding: 0 calc(12px + 8 * var(--f));
+}
+
+.app-shell--desktop .investments-stats .stat-card__icon {
+  flex-basis: calc(50px + 20 * var(--f));
+  width: calc(50px + 20 * var(--f));
+  height: calc(50px + 20 * var(--f));
+}
+
+.app-shell--desktop .investments-stats .stat-card__label {
+  margin-bottom: calc(4px + 4 * var(--f));
+  font-size: calc(12px + 4 * var(--f));
+  line-height: calc(15px + 4 * var(--f));
+}
+
+.app-shell--desktop .investments-stats .stat-card__value {
+  font-size: calc(16px + 4 * var(--f));
+  line-height: calc(19px + 5 * var(--f));
+}
+
+/* 640–825: the 1-column stack stretched every card; stats become 3 compact tiles
+   and stacked charts scale their height with width instead of staying 226px */
+@media (min-width: 640px) and (max-width: 825px) {
+  .app-shell--tablet .investments-row--charts,
+  .app-shell--tablet .investments-row--lists {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .app-shell--tablet .investments-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .app-shell--tablet .investments-stats .stat-card {
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    height: auto;
+    min-height: 140px;
+    padding: 16px 10px;
+    text-align: center;
+  }
+
+  .app-shell--tablet .investments-stats .stat-card__label {
+    white-space: normal;
+    text-wrap: balance;
+  }
+
+  .app-shell--tablet .investments-chart__card {
+    grid-template-rows: minmax(0, 1fr) auto;
+    min-height: 226px;
+    aspect-ratio: 2.2 / 1;
+  }
+}
+
+/* ─── Activity lists (Last Transaction / Invoices Sent) ─── */
+.activity-list {
+  --icon: 40px;
+  --icon-r: 15px;
+  --glyph: 18px;
+  --copy-gap: 17px;
+  --row-gap: 10px;
+  --title-font: 12px;
+  --title-lh: 15px;
+  --meta-font: 12px;
+  --meta-lh: 15px;
+  --meta-gap: 4px;
+  --value-font: 12px;
+  --value-lh: 15px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--row-gap);
+}
+
+.activity-list__row {
+  display: grid;
+  grid-template-columns: var(--icon) minmax(0, 1fr) auto;
+  align-items: center;
+  min-width: 0;
+}
+
+.activity-list--transactions .activity-list__row {
+  grid-template-columns:
+    var(--icon) minmax(0, 149fr) minmax(0, 74fr) minmax(0, 77fr) minmax(0, 73fr)
+    auto;
+}
+
+.activity-list__icon {
+  width: var(--icon);
+  height: var(--icon);
+  border-radius: var(--icon-r);
+  display: grid;
+  place-items: center;
+}
+
+.activity-list__icon img {
+  width: var(--glyph);
+  height: var(--glyph);
+}
+
+.activity-list__icon--lg img {
+  width: calc(var(--glyph) + 2px);
+  height: calc(var(--glyph) + 2px);
+}
+
+.activity-list__copy {
+  min-width: 0;
+  padding-left: var(--copy-gap);
+}
+
+.activity-list__title,
+.activity-list__meta,
+.activity-list__col,
+.activity-list__amount {
+  margin: 0;
+  white-space: nowrap;
+}
+
+.activity-list__title {
+  font-size: var(--title-font);
+  line-height: var(--title-lh);
+  font-weight: 500;
+  color: var(--color-heading);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.activity-list__meta {
+  margin-top: var(--meta-gap);
+  font-size: var(--meta-font);
+  line-height: var(--meta-lh);
+  font-weight: 400;
+  color: var(--color-muted);
+}
+
+.activity-list__col,
+.activity-list__amount {
+  font-size: var(--value-font);
+  line-height: var(--value-lh);
+  color: var(--color-muted);
+}
+
+.activity-list__col {
+  font-weight: 400;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.activity-list__amount {
+  font-weight: 500;
+  text-align: right;
+}
+
+.activity-list__amount--in {
+  color: var(--color-tx-positive);
+}
+
+.activity-list__amount--out {
+  color: var(--color-tx-negative);
+}
+
+.activity-list--invoices {
+  --icon: 45px;
+  --glyph: 18px;
+  --copy-gap: 12px;
+  --row-gap: 17px;
+  --title-font: 13px;
+  --title-lh: 16px;
+  --value-font: 13px;
+  --value-lh: 16px;
+}
+
+/* Mobile frame drops Type / Card / Status */
+.app-shell--mobile .activity-list {
+  --icon: 45px;
+  --icon-r: 12px;
+  --glyph: 20px;
+  --copy-gap: 12px;
+  --title-font: 14px;
+  --title-lh: 17px;
+}
+
+.app-shell--mobile .activity-list--transactions {
+  --row-gap: 12px;
+}
+
+.app-shell--mobile .activity-list--invoices {
+  --row-gap: 15px;
+  --value-font: 12px;
+  --value-lh: 15px;
+}
+
+.app-shell--mobile .activity-list--transactions .activity-list__row {
+  grid-template-columns: var(--icon) minmax(0, 1fr) auto;
+}
+
+.app-shell--mobile .activity-list__col {
+  display: none;
+}
+
+.app-shell--desktop .activity-list--transactions {
+  --icon: calc(40px + 15 * var(--f));
+  --icon-r: calc(15px + 5 * var(--f));
+  --glyph: calc(18px + 7 * var(--f));
+  --copy-gap: calc(17px + 8 * var(--f));
+  --title-font: calc(12px + 4 * var(--f));
+  --title-lh: calc(15px + 4 * var(--f));
+  --meta-font: calc(12px + 3 * var(--f));
+  --meta-lh: calc(15px + 3 * var(--f));
+  --meta-gap: calc(4px + 3 * var(--f));
+  --value-font: calc(12px + 4 * var(--f));
+  --value-lh: calc(15px + 4 * var(--f));
+}
+
+.app-shell--desktop .activity-list--transactions .activity-list__row {
+  grid-template-columns:
+    var(--icon) minmax(0, 212fr) minmax(0, 115fr) minmax(0, 120fr) minmax(0, 132fr)
+    auto;
+}
+
+.app-shell--desktop .activity-list--transactions .activity-list__title {
+  color: var(--color-dark);
+}
+
+.app-shell--desktop .activity-list--invoices {
+  --icon: calc(45px + 15 * var(--f));
+  --icon-r: calc(15px + 5 * var(--f));
+  --glyph: calc(18px + 7 * var(--f));
+  --copy-gap: calc(12px + 8 * var(--f));
+  --row-gap: calc(17px + 4 * var(--f));
+  --title-font: calc(13px + 3 * var(--f));
+  --title-lh: calc(16px + 3 * var(--f));
+  --meta-font: calc(12px + 3 * var(--f));
+  --meta-lh: calc(15px + 3 * var(--f));
+  --meta-gap: calc(4px + 3 * var(--f));
+  --value-font: calc(13px + 3 * var(--f));
+  --value-lh: calc(16px + 3 * var(--f));
+}
+
+.app-shell--desktop .activity-list--invoices .activity-list__title {
+  color: var(--color-nav-muted);
+}
+
+/* ─── Section cards (accounts) ─── */
+.accounts-last,
+.accounts-debit,
+.accounts-invoices {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.accounts-last__card,
+.accounts-debit__card,
+.accounts-invoices__card {
+  flex: 1 1 auto;
+  box-sizing: border-box;
+}
+
+.accounts-last__card {
+  padding: 15px 18px;
+}
+
+.accounts-invoices__card {
+  padding: 20px 20px 19px;
+}
+
+.app-shell--mobile .accounts-last__card,
+.app-shell--mobile .accounts-invoices__card {
+  padding: 20px;
+}
+
+.app-shell--desktop .accounts-last__card {
+  padding: calc(15px + 10 * var(--f)) calc(18px + 7 * var(--f));
+}
+
+.app-shell--desktop .accounts-invoices__card {
+  padding: calc(20px + 10 * var(--f)) calc(20px + 5 * var(--f)) calc(19px + 11 * var(--f));
+}
+
+.accounts-card .credit-card {
+  width: 100%;
+  max-width: 350px;
+}
+
+.app-shell--tablet .accounts-card .credit-card {
+  height: 170px;
+  max-width: none;
+}
+
+.app-shell--mobile .accounts-card {
+  padding: 0 25px;
+}
+
+.app-shell--mobile .accounts-grid .accounts-card .section-head {
+  padding: 0 20px 0 0;
+}
+
+.app-shell--mobile .accounts-card .credit-card {
+  height: 197px;
+  max-width: none;
+}
+
+.app-shell--desktop .accounts-card .credit-card {
+  height: calc(170px + 65 * var(--f));
+  max-width: none;
+}
+
+/* ─── Debit / credit chart (SVG) ─── */
+.accounts-debit__card {
+  padding: 18px 18px 17px;
+}
+
+.app-shell--mobile .accounts-debit__card {
+  padding: 18px 20px 17px 21px;
+}
+
+.app-shell--desktop .accounts-debit__card {
+  padding: calc(18px + 10 * var(--f)) calc(18px + 12 * var(--f)) calc(17px + 10 * var(--f));
+}
+
+.accounts-debit__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-width: 0;
+  margin-bottom: 16px;
+}
+
+.app-shell--mobile .accounts-debit__top {
+  justify-content: flex-end;
+  margin-bottom: 17px;
+}
+
+.app-shell--desktop .accounts-debit__top {
+  margin-bottom: calc(16px + 11 * var(--f));
+}
+
+.accounts-debit__summary {
+  margin: 0;
+  min-width: 0;
+  font-size: 12px;
+  line-height: 15px;
+  font-weight: 400;
+  color: var(--color-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.accounts-debit__summary span {
+  color: var(--color-heading);
+}
+
+.app-shell--mobile .accounts-debit__summary {
+  display: none;
+}
+
+.accounts-debit__legend {
+  display: flex;
+  flex-shrink: 0;
+  gap: 20px;
+  font-size: 12px;
+  line-height: 15px;
+  color: var(--color-muted);
+}
+
+.accounts-debit__legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.accounts-debit__legend-value {
+  display: none;
+  color: var(--color-heading);
+}
+
+.accounts-debit__swatch {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 4px;
+}
+
+.accounts-debit__swatch--debit {
+  background: var(--color-withdraw);
+}
+
+.accounts-debit__swatch--credit {
+  background: var(--color-deposit);
+}
+
+.app-shell--desktop .accounts-debit__summary,
+.app-shell--desktop .accounts-debit__legend {
+  font-size: calc(12px + 4 * var(--f));
+  line-height: calc(15px + 4 * var(--f));
+}
+
+.app-shell--desktop .accounts-debit__legend {
+  gap: calc(20px + 5 * var(--f));
+}
+
+.app-shell--desktop .accounts-debit__swatch {
+  width: calc(12px + 3 * var(--f));
+  height: calc(12px + 3 * var(--f));
+  border-radius: calc(4px + 1 * var(--f));
+}
+
+.accounts-debit__plot {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.app-shell--desktop .accounts-debit__plot {
+  gap: calc(10px + 2 * var(--f));
+}
+
+.accounts-debit__stage {
+  position: relative;
+  height: 179px;
+  min-width: 0;
+}
+
+.app-shell--mobile .accounts-debit__stage {
+  height: 153px;
+}
+
+.app-shell--desktop .accounts-debit__stage {
+  height: calc(179px + 55 * var(--f));
+}
+
+.accounts-debit__svg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: visible;
+}
+
+.accounts-debit__day {
+  pointer-events: none;
+}
+
+.accounts-debit__bar {
+  pointer-events: all;
+  cursor: pointer;
+  outline: none;
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  transition:
+    filter 0.16s ease,
+    transform 0.16s ease;
+}
+
+.accounts-debit__bar--debit {
+  fill: var(--color-withdraw);
+}
+
+.accounts-debit__bar--credit {
+  fill: var(--color-deposit);
+}
+
+.accounts-debit__bar:hover,
+.accounts-debit__bar:focus-visible {
+  filter: brightness(1.14);
+  transform: scale(1.08, 1.05);
+}
+
+.accounts-debit__bar:focus-visible {
+  stroke: color-mix(in srgb, var(--color-heading) 25%, transparent);
+  stroke-width: 1.5px;
+}
+
+.accounts-debit__x {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: 15px;
+  font-size: 12px;
+  line-height: 15px;
+  color: var(--color-muted);
+  pointer-events: none;
+}
+
+.accounts-debit__x li {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.app-shell--desktop .accounts-debit__x {
+  height: calc(15px + 2 * var(--f));
+  font-size: calc(12px + 2 * var(--f));
+  line-height: calc(15px + 2 * var(--f));
+}
+
+/* ─── Investment charts (tab 359×226 · desktop 540×282 · mobile 325×225) ─── */
+.investments-chart__card {
+  --chart-color: var(--color-primary);
+  --ylab-w: 52px;
+  --ylab-gap: 6px;
+  --plot-h: 156px;
+  --axis-font: 12px;
+  --axis-lh: 15px;
+  display: grid;
+  grid-template-columns: var(--ylab-w) minmax(0, 1fr);
+  grid-template-rows: var(--plot-h) auto;
+  column-gap: var(--ylab-gap);
+  row-gap: 8px;
+  padding: 30px 20px 17px 13px;
+  box-sizing: border-box;
+}
+
+.investments-chart__card--curve {
+  --chart-color: var(--color-deposit);
+}
+
+.app-shell--mobile .investments-chart__card {
+  --ylab-w: 49px;
+  --ylab-gap: 5px;
+  padding: 29px 20px 17px 19px;
+}
+
+.app-shell--desktop .investments-chart__card {
+  --ylab-gap: calc(6px + 3 * var(--f));
+  --plot-h: calc(156px + 34 * var(--f));
+  --axis-font: calc(12px + 1 * var(--f));
+  --axis-lh: calc(15px + 1 * var(--f));
+  padding: calc(30px + 10 * var(--f)) calc(20px + 10 * var(--f)) calc(17px + 11 * var(--f))
+    calc(13px + 16 * var(--f));
+}
+
+.investments-chart__y,
+.investments-chart__x {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: var(--axis-font);
+  line-height: var(--axis-lh);
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+
+.investments-chart__y li {
+  position: absolute;
+  right: 0;
+  transform: translateY(-80%);
+}
+
+.investments-chart__y li:nth-child(1) { top: 0; }
+.investments-chart__y li:nth-child(2) { top: 25%; }
+.investments-chart__y li:nth-child(3) { top: 50%; }
+.investments-chart__y li:nth-child(4) { top: 75%; }
+.investments-chart__y li:nth-child(5) { top: 100%; }
+
+.investments-chart__plot {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  touch-action: pan-y;
+}
+
+.investments-chart__svg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: visible;
+}
+
+.investments-chart__grid line {
+  stroke: var(--color-chart-grid);
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+}
+
+.investments-chart__line {
+  fill: none;
+  stroke: var(--chart-color);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.investments-chart__point {
+  fill: var(--color-white);
+  stroke: var(--color-accent);
+  stroke-width: 3;
+}
+
+.investments-chart__point.is-active {
+  opacity: 0;
+}
+
+.investments-chart__hover-dot {
+  fill: var(--color-white);
+  stroke: var(--color-accent);
+  stroke-width: 3;
+}
+
+.investments-chart__x {
+  grid-column: 2;
+  height: var(--axis-lh);
+}
+
+.investments-chart__x li {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+}
+
+/* ─── My Investment: one card per row (tab 423×69 · desktop 635×90 · mobile 325×69) ─── */
+.investments-portfolio__list {
+  --icon: 45px;
+  --tile-r: 15px;
+  --glyph: 20px;
+  --col-gap: 12px;
+  --title-font: 12px;
+  --title-lh: 15px;
+  --meta-font: 11px;
+  --meta-lh: 13px;
+  --meta-gap: 4px;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.investments-portfolio__row {
+  flex: 1 0 auto;
+  display: grid;
+  grid-template-columns: var(--icon) minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 0.7fr);
+  align-items: center;
+  column-gap: var(--col-gap);
+  min-height: 69px;
+  padding: 12px 14px 12px 12px;
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  box-sizing: border-box;
+}
+
+.investments-portfolio__icon {
+  width: var(--icon);
+  height: var(--icon);
+  border-radius: var(--tile-r);
+  display: grid;
+  place-items: center;
+}
+
+.investments-portfolio__icon img {
+  width: var(--glyph);
+  height: var(--glyph);
+}
+
+.investments-portfolio__cell {
+  min-width: 0;
+}
+
+.investments-portfolio__title,
+.investments-portfolio__meta {
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.investments-portfolio__title {
+  font-size: var(--title-font);
+  line-height: var(--title-lh);
+  font-weight: 500;
+  color: var(--color-dark);
+}
+
+.investments-portfolio__meta {
+  margin-top: var(--meta-gap);
+  font-size: var(--meta-font);
+  line-height: var(--meta-lh);
+  font-weight: 400;
+  color: var(--color-muted);
+}
+
+.investments-portfolio__change--up {
+  color: var(--color-tx-positive);
+}
+
+.investments-portfolio__change--down {
+  color: var(--color-tx-negative);
+}
+
+.app-shell--desktop .investments-portfolio__list {
+  --icon: calc(45px + 15 * var(--f));
+  --tile-r: calc(15px + 5 * var(--f));
+  --glyph: calc(20px + 5 * var(--f));
+  --col-gap: calc(12px + 8 * var(--f));
+  --title-font: calc(12px + 4 * var(--f));
+  --title-lh: calc(15px + 4 * var(--f));
+  --meta-font: calc(11px + 4 * var(--f));
+  --meta-lh: calc(13px + 5 * var(--f));
+  --meta-gap: calc(4px + 3 * var(--f));
+  gap: calc(10px + 5 * var(--f));
+}
+
+.app-shell--desktop .investments-portfolio__row {
+  min-height: calc(69px + 21 * var(--f));
+  padding: calc(12px + 3 * var(--f)) calc(14px + 22 * var(--f)) calc(12px + 3 * var(--f))
+    calc(12px + 3 * var(--f));
+}
+
+/* Mobile frame: name + category and the return figure only */
+.app-shell--mobile .investments-portfolio__list {
+  --tile-r: 12px;
+  --title-font: 14px;
+  --title-lh: 17px;
+  --meta-font: 12px;
+  --meta-lh: 15px;
+}
+
+.app-shell--mobile .investments-portfolio__row {
+  grid-template-columns: var(--icon) minmax(0, 1fr) auto;
+  padding: 12px 15px 12px 12px;
+  border-radius: 15px;
+}
+
+.app-shell--mobile .investments-portfolio__cell--value,
+.app-shell--mobile .investments-portfolio__cell--return .investments-portfolio__meta {
+  display: none;
+}
+
+.app-shell--mobile .investments-portfolio__change {
+  font-size: 12px;
+  line-height: 15px;
+}
+
+/* ─── Trending stock (tab 295×227 · desktop 445×300 · mobile 325×213) ─── */
+.investments-trending__card {
+  --cols: 53fr 79fr 75fr 52fr;
+  --font: 12px;
+  --lh: 15px;
+  flex: 1 1 auto;
+  padding: 17px 18px 19px;
+}
+
+.investments-trending__head,
+.investments-trending__row {
+  display: grid;
+  grid-template-columns: var(--cols);
+  align-items: center;
+  font-size: var(--font);
+  line-height: var(--lh);
+  white-space: nowrap;
+}
+
+.investments-trending__head {
+  padding-bottom: 7px;
+  border-bottom: 1px solid var(--color-table-divider);
+  color: var(--color-muted);
+  font-weight: 500;
+}
+
+.investments-trending__list {
+  display: flex;
+  flex-direction: column;
+  gap: 21px;
+  list-style: none;
+  margin: 0;
+  padding: 9px 0 0;
+}
+
+.investments-trending__row {
+  color: var(--color-dark);
+  font-weight: 400;
+}
+
+.investments-trending__row .is-up {
+  color: var(--color-tx-positive);
+  font-weight: 500;
+}
+
+.investments-trending__row .is-down {
+  color: var(--color-tx-negative);
+  font-weight: 500;
+}
+
+.app-shell--mobile .investments-trending__card {
+  --cols: 53fr 93fr 83fr 56fr;
+  padding: 17px 20px;
+}
+
+.app-shell--mobile .investments-trending__list {
+  gap: 18px;
+}
+
+.app-shell--desktop .investments-trending__card {
+  --cols: 82fr 131fr 104fr 68fr;
+  --font: calc(12px + 4 * var(--f));
+  --lh: calc(15px + 4 * var(--f));
+  padding: calc(17px + 10 * var(--f)) calc(18px + 12 * var(--f)) calc(19px + 6 * var(--f));
+}
+
+.app-shell--desktop .investments-trending__head {
+  padding-bottom: calc(7px + 1 * var(--f));
+}
+
+.app-shell--desktop .investments-trending__list {
+  gap: calc(21px + 7 * var(--f));
+  padding-top: calc(9px + 4 * var(--f));
+}
+
+/* 640–825: full-width rows and table get the mobile frame's larger type */
+@media (min-width: 640px) and (max-width: 825px) {
+  .app-shell--tablet .investments-portfolio__list {
+    --title-font: 14px;
+    --title-lh: 17px;
+    --meta-font: 12px;
+    --meta-lh: 15px;
+  }
+
+  .app-shell--tablet .investments-trending__card {
+    --font: 14px;
+    --lh: 17px;
+  }
+}
+
+/* ─── Mobile section padding ─── */
+@media (max-width: 639px) {
+  .accounts-grid .section-head,
+  .investments-grid .section-head {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+
+  .accounts-stats {
+    padding: 0 25px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+  }
+
+  .investments-stats {
+    padding: 0 25px;
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .accounts-last__card,
+  .accounts-invoices__card,
+  .accounts-debit__card,
+  .investments-chart__card,
+  .investments-portfolio__list,
+  .investments-trending__card {
+    margin-left: 25px;
+    margin-right: 25px;
+  }
+}
+
+/* Section titles — match dashboard / transactions (22 / 18 / 16) */
+.accounts-grid .section-head h2,
+.investments-grid .section-head h2 {
+  font-size: 22px;
+  line-height: 27px;
+  font-weight: 600;
+  color: var(--color-heading);
+}
+
+.app-shell--tablet .accounts-grid .section-head h2,
+.app-shell--tablet .investments-grid .section-head h2 {
+  font-size: 18px;
+  line-height: 22px;
+}
+
+.app-shell--mobile .accounts-grid .section-head h2,
+.app-shell--mobile .investments-grid .section-head h2 {
+  font-size: 16px;
+  line-height: 19px;
+}
+
+.app-shell--desktop .accounts-grid .section-head h2,
+.app-shell--desktop .investments-grid .section-head h2 {
+  font-size: calc(18px + 4 * var(--f));
+  line-height: calc(22px + 5 * var(--f));
+}

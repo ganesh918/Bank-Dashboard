@@ -1,0 +1,909 @@
+/* Motion system — Midnight / Aqua / Mint (advanced FX, respects reduced motion) */
+
+:root {
+  --motion-fast: 0.16s;
+  --motion-base: 0.28s;
+  --motion-slow: 0.55s;
+  --motion-slower: 0.85s;
+  --motion-spring: cubic-bezier(0.22, 1, 0.36, 1);
+  --motion-emphasis: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --motion-bounce: cubic-bezier(0.68, -0.2, 0.32, 1.2);
+  --glow-accent: 0 0 0 1px color-mix(in srgb, var(--color-primary) 40%, transparent),
+    0 14px 36px -10px color-mix(in srgb, var(--color-primary) 35%, transparent),
+    0 0 48px -12px color-mix(in srgb, var(--color-deposit) 25%, transparent);
+  --glow-gold: var(--glow-accent);
+  --lift-sm: translateY(-4px);
+  --lift-md: translateY(-8px);
+}
+
+/* ─── Keyframes ─── */
+@keyframes anim-page-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.975);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes anim-rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes anim-scale-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.88) translateY(20px);
+  }
+  70% {
+    transform: scale(1.02) translateY(-2px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes anim-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes anim-shimmer {
+  from {
+    transform: translateX(-130%) skewX(-14deg);
+  }
+  to {
+    transform: translateX(230%) skewX(-14deg);
+  }
+}
+
+@keyframes anim-pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-primary) 50%, transparent);
+  }
+  70% {
+    box-shadow: 0 0 0 12px color-mix(in srgb, var(--color-primary) 0%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-primary) 0%, transparent);
+  }
+}
+
+@keyframes anim-orb-drift {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(30px, -24px) scale(1.08);
+  }
+  100% {
+    transform: translate(-20px, 16px) scale(0.95);
+  }
+}
+
+@keyframes anim-card-gradient {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes anim-text-shine {
+  to {
+    background-position: 200% center;
+  }
+}
+
+@keyframes anim-logo-glow {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 6px color-mix(in srgb, var(--color-primary) 35%, transparent));
+  }
+  50% {
+    filter: drop-shadow(0 0 14px color-mix(in srgb, var(--color-deposit) 55%, transparent));
+  }
+}
+
+@keyframes anim-header-in {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+    letter-spacing: 0.06em;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    letter-spacing: normal;
+  }
+}
+
+@keyframes anim-bar-rise {
+  from {
+    transform: scale(1, 0.15);
+    opacity: 0.35;
+  }
+  to {
+    transform: scale(1, 1);
+    opacity: 1;
+  }
+}
+
+@keyframes anim-slice-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes expense-label-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes anim-float-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes anim-tab-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-primary) 0%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 20px color-mix(in srgb, var(--color-primary) 35%, transparent);
+  }
+}
+
+/* ─── Ambient app backdrop ─── */
+.app-shell--fx {
+  position: relative;
+  isolation: isolate;
+}
+
+.app-shell--fx::before,
+.app-shell--fx::after {
+  content: '';
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(90px);
+  opacity: 0.32;
+  animation: anim-orb-drift 20s ease-in-out infinite alternate;
+}
+
+.app-shell--fx::before {
+  width: min(480px, 55vw);
+  height: min(480px, 55vw);
+  top: -140px;
+  right: 8%;
+  background: radial-gradient(circle, var(--color-primary) 0%, transparent 70%);
+}
+
+.app-shell--fx::after {
+  width: min(400px, 45vw);
+  height: min(400px, 45vw);
+  bottom: 0;
+  left: -100px;
+  background: radial-gradient(circle, var(--color-deposit) 0%, transparent 72%);
+  animation-duration: 26s;
+  animation-delay: -8s;
+}
+
+.app-shell--fx > .sidebar,
+.app-shell--fx > .app-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── Route & page entrance ─── */
+.page-route {
+  animation: anim-page-in var(--motion-slower) var(--motion-spring) both;
+}
+
+.page-main {
+  animation: anim-fade-in var(--motion-base) ease both;
+}
+
+.header-title {
+  animation: anim-header-in var(--motion-slow) var(--motion-spring) 0.08s both;
+}
+
+.sidebar-brand__wordmark {
+  animation: anim-logo-glow 4s ease-in-out infinite;
+}
+
+/* Staggered section entrance */
+.animate-stagger > .section,
+.animate-stagger > .dashboard-grid,
+.animate-stagger > .accounts-grid,
+.animate-stagger > .investments-grid,
+.animate-stagger > .cc-grid,
+.animate-stagger > .loans-grid,
+.animate-stagger > .svc-grid,
+.animate-stagger > .transactions-grid,
+.animate-stagger > .set-card {
+  animation: anim-rise-in var(--motion-slow) var(--motion-spring) both;
+}
+
+.animate-stagger > *:nth-child(1) {
+  animation-delay: 0.05s;
+}
+.animate-stagger > *:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.animate-stagger > *:nth-child(3) {
+  animation-delay: 0.15s;
+}
+.animate-stagger > *:nth-child(4) {
+  animation-delay: 0.2s;
+}
+.animate-stagger > *:nth-child(5) {
+  animation-delay: 0.25s;
+}
+.animate-stagger > *:nth-child(6) {
+  animation-delay: 0.3s;
+}
+.animate-stagger > *:nth-child(7) {
+  animation-delay: 0.35s;
+}
+.animate-stagger > *:nth-child(8) {
+  animation-delay: 0.4s;
+}
+
+.dashboard-grid > .section,
+.accounts-grid > .section,
+.investments-grid > .section,
+.investments-grid > .investments-row,
+.cc-grid > .section,
+.transactions-grid > .section,
+.loans-grid > .section,
+.svc-grid > .section,
+.svc-grid > .svc-stats {
+  animation: anim-rise-in var(--motion-slow) var(--motion-spring) both;
+}
+
+.stat-card {
+  animation: anim-scale-pop var(--motion-slow) var(--motion-emphasis) both;
+}
+
+.dashboard-grid > .section:nth-child(1),
+.accounts-grid > .section:nth-child(1),
+.investments-grid > .section:nth-child(1),
+.cc-grid > .section:nth-child(1) {
+  animation-delay: 0.06s;
+}
+.dashboard-grid > .section:nth-child(2),
+.accounts-grid > .section:nth-child(2),
+.investments-grid > .section:nth-child(2),
+.cc-grid > .section:nth-child(2) {
+  animation-delay: 0.12s;
+}
+.dashboard-grid > .section:nth-child(3),
+.accounts-grid > .section:nth-child(3),
+.investments-grid > .section:nth-child(3),
+.cc-grid > .section:nth-child(3) {
+  animation-delay: 0.18s;
+}
+.dashboard-grid > .section:nth-child(4),
+.accounts-grid > .section:nth-child(4),
+.investments-grid > .section:nth-child(4),
+.cc-grid > .section:nth-child(4) {
+  animation-delay: 0.24s;
+}
+.dashboard-grid > .section:nth-child(5),
+.dashboard-grid > .dashboard-row-bottom {
+  animation-delay: 0.3s;
+}
+
+.loans-stats .stat-card:nth-child(1) {
+  animation-delay: 0.08s;
+}
+.loans-stats .stat-card:nth-child(2) {
+  animation-delay: 0.14s;
+}
+.loans-stats .stat-card:nth-child(3) {
+  animation-delay: 0.2s;
+}
+.loans-stats .stat-card:nth-child(4) {
+  animation-delay: 0.26s;
+}
+
+/* ─── Cards & panels ─── */
+.section-card,
+.stat-card {
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform var(--motion-base) var(--motion-spring),
+    box-shadow var(--motion-base) ease,
+    border-color var(--motion-fast) ease;
+  border: 1px solid transparent;
+}
+
+.section-card::before,
+.stat-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  background: radial-gradient(
+    130% 90% at 50% -10%,
+    color-mix(in srgb, var(--color-primary) 18%, transparent),
+    color-mix(in srgb, var(--color-deposit) 8%, transparent) 45%,
+    transparent 70%
+  );
+  transition: opacity var(--motion-base) ease;
+  pointer-events: none;
+}
+
+.section-card::after,
+.stat-card::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    120deg,
+    transparent 30%,
+    color-mix(in srgb, var(--color-primary) 55%, transparent) 50%,
+    transparent 70%
+  );
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity var(--motion-base) ease;
+  pointer-events: none;
+}
+
+.section-card:hover,
+.stat-card:hover {
+  transform: var(--lift-sm) scale(1.008);
+  box-shadow: var(--glow-accent);
+  border-color: color-mix(in srgb, var(--color-primary) 28%, transparent);
+}
+
+.section-card:hover::before,
+.stat-card:hover::before,
+.section-card:hover::after,
+.stat-card:hover::after {
+  opacity: 1;
+}
+
+/* Credit cards — 3D tilt, flowing gradient, shine */
+.my-cards__row,
+.cc-cards__row,
+.my-cards--transactions .my-cards__row {
+  perspective: 1400px;
+}
+
+.credit-card {
+  transform-style: preserve-3d;
+  transition:
+    transform var(--motion-base) var(--motion-spring),
+    box-shadow var(--motion-base) ease;
+  will-change: transform;
+}
+
+.credit-card--primary {
+  background: linear-gradient(
+    -45deg,
+    var(--color-card-gradient-start),
+    var(--color-primary),
+    var(--color-card-gradient-end),
+    var(--color-deposit),
+    var(--color-card-gradient-start)
+  ) !important;
+  background-size: 320% 320% !important;
+  animation: anim-card-gradient 12s ease infinite;
+}
+
+.credit-card::after {
+  content: '';
+  position: absolute;
+  inset: -25%;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.22) 50%,
+    transparent 60%
+  );
+  transform: translateX(-140%) skewX(-14deg);
+  transition: transform 0.85s var(--motion-spring);
+  pointer-events: none;
+}
+
+.credit-card:hover {
+  transform: translateY(-8px) rotateX(5deg) rotateY(-4deg) scale(1.02);
+  box-shadow:
+    0 22px 48px -14px rgba(0, 0, 0, 0.6),
+    0 0 0 1px color-mix(in srgb, var(--color-primary) 40%, transparent),
+    0 0 40px -8px color-mix(in srgb, var(--color-deposit) 35%, transparent);
+}
+
+.credit-card:hover::after {
+  transform: translateX(140%) skewX(-14deg);
+}
+
+.credit-card--secondary:hover {
+  box-shadow: var(--glow-accent);
+}
+
+/* ─── Navigation ─── */
+.nav-item {
+  transition:
+    color var(--motion-base) ease,
+    transform var(--motion-base) var(--motion-spring),
+    background-color var(--motion-fast) ease;
+}
+
+.nav-item:hover,
+.nav-item:focus-visible {
+  transform: translateX(6px);
+}
+
+.nav-item::before {
+  transition:
+    opacity var(--motion-base) ease,
+    transform var(--motion-base) var(--motion-emphasis),
+    box-shadow var(--motion-base) ease;
+  transform: translateY(-50%) scaleY(0.4);
+}
+
+.nav-item.active::before {
+  opacity: 1;
+  animation: anim-tab-glow 2.5s ease-in-out infinite;
+}
+
+.nav-item.active::before,
+.nav-item:hover::before,
+.nav-item:focus-visible::before {
+  transform: translateY(-50%) scaleY(1);
+  box-shadow: 0 0 22px color-mix(in srgb, var(--color-primary) 60%, transparent);
+}
+
+.sidebar--drawer {
+  transition: transform var(--motion-base) var(--motion-spring);
+}
+
+.app-shell--nav-drawer .sidebar-backdrop.visible {
+  background: rgba(4, 16, 32, 0.65);
+  backdrop-filter: blur(8px);
+  animation: anim-fade-in var(--motion-base) ease both;
+}
+
+/* ─── Header controls ─── */
+.search-field {
+  transition:
+    box-shadow var(--motion-base) ease,
+    transform var(--motion-fast) ease,
+    background-color var(--motion-fast) ease;
+}
+
+.search-field:focus-within {
+  transform: scale(1.015);
+  box-shadow: var(--glow-accent);
+}
+
+.icon-btn,
+.avatar,
+.menu-toggle {
+  transition:
+    transform var(--motion-base) var(--motion-emphasis),
+    box-shadow var(--motion-base) ease,
+    background-color var(--motion-fast) ease;
+}
+
+.icon-btn:hover,
+.icon-btn:focus-visible,
+.avatar:hover,
+.avatar:focus-visible,
+.menu-toggle:hover,
+.menu-toggle:focus-visible {
+  transform: scale(1.08) rotate(-2deg);
+  box-shadow: 0 10px 24px -8px color-mix(in srgb, var(--color-primary) 45%, transparent);
+}
+
+.menu-toggle:active {
+  transform: scale(0.94);
+}
+
+/* ─── Lists & rows ─── */
+.transaction-item,
+.activity-list__row,
+.loans-table__row:not(.loans-table__row--head):not(.loans-table__row--total),
+.cc-list__row,
+.svc-row,
+.svc-stat,
+.tx-table tbody tr,
+.tx-mobile-row {
+  transition:
+    background-color var(--motion-fast) ease,
+    box-shadow var(--motion-fast) ease;
+  border-radius: 12px;
+}
+
+.transaction-item:hover,
+.activity-list__row:hover,
+.loans-table__row:not(.loans-table__row--head):not(.loans-table__row--total):hover,
+.cc-list__row:hover,
+.svc-row:hover,
+.svc-stat:hover,
+.tx-table tbody tr:hover,
+.tx-mobile-row:hover {
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--color-primary) 8%, var(--color-surface)),
+    color-mix(in srgb, var(--color-deposit) 5%, var(--color-surface))
+  );
+  box-shadow: inset 3px 0 0 var(--color-primary);
+}
+
+.transaction-icon,
+.stat-card__icon,
+.activity-list__icon,
+.cc-tile,
+.svc-row__icon,
+.svc-stat__icon {
+  transition:
+    transform var(--motion-base) var(--motion-emphasis),
+    box-shadow var(--motion-base) ease;
+}
+
+.stat-card__icon {
+  animation: anim-float-soft 5s ease-in-out infinite;
+}
+
+.stat-card:nth-child(2) .stat-card__icon {
+  animation-delay: -1.2s;
+}
+.stat-card:nth-child(3) .stat-card__icon {
+  animation-delay: -2.4s;
+}
+.stat-card:nth-child(4) .stat-card__icon {
+  animation-delay: -3.6s;
+}
+
+.transaction-item:hover .transaction-icon,
+.activity-list__row:hover .activity-list__icon,
+.stat-card:hover .stat-card__icon,
+.svc-row:hover .svc-row__icon,
+.svc-stat:hover .svc-stat__icon,
+.cc-settings__item:hover .cc-tile {
+  transform: scale(1.12) rotate(-6deg);
+  box-shadow: 0 10px 22px -8px color-mix(in srgb, var(--color-primary) 50%, transparent);
+  animation: none;
+}
+
+/* ─── Buttons & links (shimmer on hover) ─── */
+.link-btn,
+.tx-download,
+.loans-table__repay,
+.svc-row__btn,
+.set-save,
+.cc-add__submit,
+.tx-pagination__page,
+.tx-pagination__nav,
+.set-tab {
+  transition:
+    transform var(--motion-fast) var(--motion-emphasis),
+    background-color var(--motion-fast) ease,
+    color var(--motion-fast) ease,
+    border-color var(--motion-fast) ease,
+    box-shadow var(--motion-base) ease;
+}
+
+.set-save::before,
+.cc-add__submit::before,
+.amount-composite .send-btn::before,
+.tx-download::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+
+.set-save:hover::before,
+.cc-add__submit:hover::before,
+.amount-composite .send-btn:hover::before,
+.tx-download:hover::before {
+  animation: anim-shimmer 0.75s ease;
+}
+
+.link-btn:hover,
+.tx-download:hover,
+.loans-table__repay:hover,
+.svc-row__btn:hover,
+.set-save:hover,
+.cc-add__submit:hover,
+.tx-pagination__page:hover,
+.tx-pagination__nav:hover,
+.set-tab:hover {
+  color: var(--color-primary);
+}
+
+.link-btn:active,
+.tx-download:active,
+.loans-table__repay:active,
+.svc-row__btn:active,
+.set-save:active,
+.cc-add__submit:active,
+.tx-pagination__page:active,
+.tx-pagination__nav:active,
+.set-tab:active {
+  opacity: 0.92;
+}
+
+/* Send stays pinned inside the amount pill (absolute right) */
+.amount-composite .send-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  overflow: hidden;
+  transition:
+    transform var(--motion-fast) var(--motion-emphasis),
+    background-color var(--motion-fast) ease,
+    color var(--motion-fast) ease,
+    box-shadow var(--motion-base) ease,
+    filter var(--motion-fast) ease;
+}
+
+.amount-composite .send-btn:hover {
+  transform: scale(1.03);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  box-shadow: 0 6px 18px -6px color-mix(in srgb, var(--color-primary) 55%, transparent);
+}
+
+.amount-composite .send-btn:active {
+  transform: scale(0.98);
+}
+
+.tx-pagination__page--active {
+  animation: anim-pulse-ring 1.8s ease-out infinite;
+}
+
+.tx-tabs__item--active::after {
+  animation: anim-tab-glow 2.2s ease-in-out infinite;
+}
+
+/* ─── Quick transfer ─── */
+.transfer-contact {
+  transition: transform var(--motion-base) var(--motion-spring);
+  cursor: pointer;
+}
+
+.transfer-contact:hover {
+  transform: translateY(-6px) scale(1.03);
+}
+
+.transfer-avatar {
+  transition:
+    transform var(--motion-base) var(--motion-emphasis),
+    box-shadow var(--motion-base) ease;
+}
+
+.transfer-contact:hover .transfer-avatar {
+  transform: scale(1.1);
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--color-primary) 45%, transparent),
+    0 0 24px color-mix(in srgb, var(--color-deposit) 35%, transparent);
+}
+
+/* ─── Expense statistics chart ─── */
+.section-card--expense {
+  transition: box-shadow var(--motion-base) ease;
+}
+
+.section-card--expense:hover {
+  box-shadow: var(--glow-accent);
+}
+
+.expense-chart__svg {
+  transition: transform var(--motion-slow) var(--motion-spring);
+}
+
+.expense-stats:hover .expense-chart__svg {
+  transform: scale(1.02);
+}
+
+.expense-chart__slice {
+  animation: anim-slice-pop 0.65s var(--motion-spring) both;
+  transform-box: fill-box;
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+
+.expense-chart__slice:nth-child(1) {
+  animation-delay: 0.08s;
+}
+.expense-chart__slice:nth-child(2) {
+  animation-delay: 0.18s;
+}
+.expense-chart__slice:nth-child(3) {
+  animation-delay: 0.28s;
+}
+.expense-chart__slice:nth-child(4) {
+  animation-delay: 0.38s;
+}
+
+.expense-chart__wedge {
+  transition: filter 0.45s var(--motion-spring);
+}
+
+.expense-chart__slice--active .expense-chart__wedge {
+  filter: brightness(1.12) drop-shadow(0 6px 14px color-mix(in srgb, var(--color-primary) 35%, transparent));
+}
+
+.expense-chart__slice text {
+  animation: expense-label-in 0.55s var(--motion-spring) both;
+}
+
+.expense-chart__slice:nth-child(1) text {
+  animation-delay: 0.22s;
+}
+.expense-chart__slice:nth-child(2) text {
+  animation-delay: 0.32s;
+}
+.expense-chart__slice:nth-child(3) text {
+  animation-delay: 0.42s;
+}
+.expense-chart__slice:nth-child(4) text {
+  animation-delay: 0.52s;
+}
+
+.weekly-chart__bar,
+.accounts-debit__bar {
+  transform-origin: center bottom;
+  transform-box: fill-box;
+  animation: anim-bar-rise var(--motion-slow) var(--motion-spring) both;
+  transition:
+    filter var(--motion-fast) ease,
+    transform var(--motion-base) var(--motion-emphasis);
+}
+
+.weekly-chart__bar:nth-child(odd),
+.accounts-debit__bar:nth-child(odd) {
+  animation-delay: 0.05s;
+}
+
+.weekly-chart__bar:hover,
+.weekly-chart__bar:focus-visible,
+.accounts-debit__bar:hover,
+.accounts-debit__bar:focus-visible {
+  transform: scale(1.12, 1.08);
+  filter: brightness(1.2) drop-shadow(0 4px 8px color-mix(in srgb, var(--color-primary) 40%, transparent));
+}
+
+.balance-chart__line,
+.investments-chart__line {
+  animation: anim-fade-in 1.1s var(--motion-spring) 0.25s both;
+  filter: drop-shadow(0 0 8px color-mix(in srgb, var(--color-primary) 35%, transparent));
+}
+
+.balance-chart__dot,
+.investments-chart__hover-dot,
+.balance-chart__halo {
+  transition:
+    r var(--motion-fast) ease,
+    opacity var(--motion-fast) ease;
+}
+
+.balance-chart__hover .balance-chart__halo {
+  animation: anim-pulse-ring 1.1s ease-out infinite;
+}
+
+/* ─── Form controls ─── */
+.set-field__input,
+.cc-add__control input {
+  transition:
+    border-color var(--motion-fast) ease,
+    box-shadow var(--motion-base) ease,
+    transform var(--motion-fast) ease;
+}
+
+.set-field__input:focus,
+.cc-add__control input:focus {
+  transform: translateY(-2px);
+  box-shadow: var(--glow-accent);
+}
+
+/* ─── Section headings ─── */
+.section-head h2 {
+  transition:
+    color var(--motion-fast) ease,
+    background-position var(--motion-slow) ease;
+}
+
+.section-head:hover h2 {
+  background: linear-gradient(
+    90deg,
+    var(--color-heading),
+    var(--color-primary),
+    var(--color-deposit),
+    var(--color-heading)
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: anim-text-shine 2.8s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .app-shell--fx::before,
+  .app-shell--fx::after {
+    display: none;
+  }
+
+  .section-card:hover,
+  .stat-card:hover,
+  .credit-card:hover,
+  .transaction-item:hover,
+  .activity-list__row:hover,
+  .transfer-contact:hover {
+    transform: none;
+  }
+
+  .credit-card--primary {
+    animation: none !important;
+  }
+
+  .section-head:hover h2 {
+    color: var(--color-primary);
+    background: none;
+    -webkit-background-clip: unset;
+    background-clip: unset;
+  }
+}

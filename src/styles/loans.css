@@ -1,0 +1,350 @@
+/* Loans — Figma 101:677 (1440) / 158:819 (1024) / 196:681 (375)
+   Desktop values interpolate tab → desktop with --f (see tokens.css). */
+
+.loans-main {
+  container-type: inline-size;
+  container-name: dash-main;
+}
+
+.app-shell--tablet .loans-main {
+  padding: 25px 25px 40px;
+}
+
+.app-shell--desktop .loans-main {
+  padding-top: calc(25px + 5 * var(--f));
+}
+
+.app-shell--mobile .loans-main {
+  padding: 25px 0 40px;
+}
+
+.loans-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  row-gap: 20px;
+}
+
+.app-shell--desktop .loans-grid {
+  row-gap: calc(20px + 4 * var(--f));
+}
+
+.app-shell--mobile .loans-grid {
+  row-gap: 22px;
+}
+
+.loans-overview {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.app-shell--desktop .loans-overview .section-head {
+  margin-bottom: calc(16px - 1 * var(--f));
+}
+
+.app-shell--mobile .loans-overview .section-head {
+  margin-bottom: 12px;
+  padding: 0 25px;
+}
+
+/* ─── Stat cards ───
+   Figma: 4-up 255×120 / 167×90; mobile scrolls 230×85 cards.
+   640–825 pairs them up 2×2. */
+.loans-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+@media (min-width: 826px) {
+  .app-shell--tablet .loans-stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 25px;
+  }
+}
+
+/* Icon rail widths leave 157–215px cards; a tighter gap keeps "Choose Money" clear */
+@media (min-width: 826px) and (max-width: 999px) {
+  .app-shell--tablet .loans-stats {
+    gap: 20px;
+  }
+}
+
+.app-shell--desktop .loans-stats {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: calc(25px + 5 * var(--f));
+}
+
+/* The scroller clips on both axes, so it carries room for the card shadow and cancels it with margins */
+.app-shell--mobile .loans-stats {
+  display: flex;
+  gap: 15px;
+  margin: -16px 0 -22px;
+  padding: 16px 25px 22px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scroll-padding: 0 25px;
+  scrollbar-width: none;
+}
+
+.app-shell--mobile .loans-stats::-webkit-scrollbar {
+  display: none;
+}
+
+.loans-stats .stat-card {
+  justify-content: center;
+  gap: 10px;
+  height: 90px;
+  padding: 0 4px;
+}
+
+.loans-stats .stat-card__icon {
+  flex: 0 0 45px;
+  width: 45px;
+  height: 45px;
+}
+
+.loans-stats .stat-card__glyph {
+  width: 18px;
+  height: 18px;
+}
+
+.loans-stats .stat-card__label {
+  margin-bottom: 5px;
+  font-size: 11px;
+  line-height: 13px;
+  white-space: nowrap;
+}
+
+.loans-stats .stat-card__value {
+  font-size: 16px;
+  line-height: 19px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.loans-stats .stat-card:nth-child(4) .stat-card__value {
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.app-shell--desktop .loans-stats .stat-card {
+  height: calc(90px + 30 * var(--f));
+  gap: calc(10px + 5 * var(--f));
+  padding: 0 calc(4px + 8 * var(--f));
+}
+
+.app-shell--desktop .loans-stats .stat-card__icon {
+  flex-basis: calc(45px + 25 * var(--f));
+  width: calc(45px + 25 * var(--f));
+  height: calc(45px + 25 * var(--f));
+}
+
+.app-shell--desktop .loans-stats .stat-card__glyph {
+  width: calc(18px + 12 * var(--f));
+  height: calc(18px + 12 * var(--f));
+}
+
+.app-shell--desktop .loans-stats .stat-card__label {
+  margin-bottom: calc(5px + 3 * var(--f));
+  font-size: calc(11px + 5 * var(--f));
+  line-height: calc(13px + 6 * var(--f));
+}
+
+.app-shell--desktop .loans-stats .stat-card__value {
+  font-size: calc(16px + 4 * var(--f));
+  line-height: calc(19px + 5 * var(--f));
+}
+
+.app-shell--desktop .loans-stats .stat-card:nth-child(4) .stat-card__value {
+  font-size: calc(13px + 5 * var(--f));
+  line-height: calc(16px + 6 * var(--f));
+}
+
+.app-shell--mobile .loans-stats .stat-card {
+  flex: 0 0 230px;
+  gap: 12px;
+  height: 85px;
+  padding: 0 12px;
+  scroll-snap-align: start;
+}
+
+.app-shell--mobile .loans-stats .stat-card__glyph {
+  width: 20px;
+  height: 20px;
+}
+
+.app-shell--mobile .loans-stats .stat-card__label {
+  margin-bottom: 4px;
+  font-size: 12px;
+  line-height: 15px;
+}
+
+.app-shell--mobile .loans-stats .stat-card:nth-child(4) .stat-card__value {
+  font-size: 16px;
+  line-height: 19px;
+}
+
+/* ─── Active loans table ───
+   Column widths are the Figma x-offsets: 58/115/117/104/106/123/80 of 703 (tab),
+   100/168/174/171/147/172/118 of 1050 (desktop), 106/109/70 of 285 (mobile). */
+.loans-table {
+  --loans-cols: 58fr 115fr 117fr 104fr 106fr 123fr minmax(80px, 80fr);
+  padding: 22px 20px;
+  font-size: 12px;
+  line-height: 15px;
+}
+
+.loans-table__row {
+  display: grid;
+  grid-template-columns: var(--loans-cols);
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-table-row-divider);
+  color: var(--color-dark);
+}
+
+.loans-table__row--head {
+  padding: 0 0 7px;
+  border-bottom-color: var(--color-table-divider);
+  color: var(--color-muted);
+  font-weight: 500;
+}
+
+.loans-table__row--total {
+  padding: 10px 0 0;
+  border-bottom: 0;
+  color: var(--color-tx-negative);
+  font-weight: 500;
+}
+
+.loans-table__cell {
+  min-width: 0;
+  padding-right: 8px;
+  white-space: nowrap;
+}
+
+.loans-table__cell--repay {
+  padding-right: 0;
+}
+
+.loans-table__row--head .loans-table__cell--repay {
+  padding-left: 22px;
+}
+
+.loans-table__repay {
+  display: grid;
+  place-items: center;
+  width: 80px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-dark);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.loans-table__repay.is-active,
+.loans-table__repay:hover,
+.loans-table__repay:focus-visible {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.loans-table__repay:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* 640–825: seven columns crowd the narrow tablet content, so SL No and Interest rate
+   drop out (as the mobile frame drops columns) and Total moves onto its own line. */
+@media (min-width: 640px) and (max-width: 825px) {
+  .app-shell--tablet .loans-table {
+    --loans-cols: 115fr 117fr 104fr 123fr minmax(80px, 80fr);
+  }
+
+  .app-shell--tablet .loans-table__cell--id,
+  .app-shell--tablet .loans-table__cell--rate {
+    display: none;
+  }
+
+  .app-shell--tablet .loans-table__row--total {
+    row-gap: 6px;
+  }
+
+  .app-shell--tablet .loans-table__row--total .loans-table__total-label {
+    display: block;
+    grid-column: 1 / -1;
+  }
+}
+
+.app-shell--desktop .loans-table {
+  --loans-cols: calc(58px + 42 * var(--f)) calc(115px + 53 * var(--f)) calc(117px + 57 * var(--f))
+    calc(104px + 67 * var(--f)) calc(106px + 41 * var(--f)) calc(123px + 49 * var(--f)) minmax(0, 1fr);
+  padding: 22px calc(20px + 10 * var(--f)) calc(22px - 1 * var(--f));
+  font-size: calc(12px + 4 * var(--f));
+  line-height: calc(15px + 4 * var(--f));
+}
+
+.app-shell--desktop .loans-table__row {
+  padding: calc(10px + 5 * var(--f)) 0 calc(10px + 4 * var(--f));
+}
+
+.app-shell--desktop .loans-table__row--head {
+  padding: 0 0 calc(7px + 4 * var(--f));
+}
+
+.app-shell--desktop .loans-table__row--total {
+  padding: calc(10px + 2 * var(--f)) 0 0;
+}
+
+.app-shell--desktop .loans-table__row--head .loans-table__cell--repay {
+  padding-left: calc(22px - 22 * var(--f));
+}
+
+.app-shell--desktop .loans-table__repay {
+  width: calc(80px + 20 * var(--f));
+  height: calc(30px + 5 * var(--f));
+  font-size: calc(12px + 3 * var(--f));
+}
+
+/* Mobile: Loan Money · Left to repay · Repay; Total label above its values */
+.app-shell--mobile .loans-table {
+  --loans-cols: 106fr 109fr 70px;
+  margin: 0 25px;
+  padding: 17px 20px 18px;
+  border-radius: 15px;
+}
+
+.app-shell--mobile .loans-table__cell--id,
+.app-shell--mobile .loans-table__cell--duration,
+.app-shell--mobile .loans-table__cell--rate,
+.app-shell--mobile .loans-table__cell--installment {
+  display: none;
+}
+
+.app-shell--mobile .loans-table__row--head .loans-table__cell--repay {
+  padding-left: 0;
+}
+
+.app-shell--mobile .loans-table__row--total {
+  row-gap: 5px;
+  padding-top: 5px;
+}
+
+.app-shell--mobile .loans-table__row--total .loans-table__total-label {
+  display: block;
+  grid-column: 1 / -1;
+}
+
+.app-shell--mobile .loans-table__repay {
+  width: 70px;
+  height: 25px;
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}

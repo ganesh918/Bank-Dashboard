@@ -1,0 +1,656 @@
+/* Credit Cards — Figma 101:371 (1440) / 158:118 (1024) / 196:190 (375)
+   Desktop values interpolate tab → desktop with --f (see tokens.css). */
+
+.cc-main {
+  container-type: inline-size;
+  container-name: dash-main;
+}
+
+.app-shell--tablet .cc-main {
+  padding: 21px 25px 40px;
+}
+
+.app-shell--mobile .cc-main {
+  padding: 22px 0 40px;
+}
+
+/* ─── Layout ───
+   ≥826px viewport: Figma grid — cards 3-up, stats | list (1:2), add card | settings (2:1).
+   640–825: cards scroll as a strip, stats + settings pair up, list and form go full width. */
+.cc-grid {
+  display: grid;
+  gap: var(--dash-row-gap, 20px) var(--dash-gap, 25px);
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: 'cards' 'stats' 'list' 'add' 'settings';
+}
+
+.cc-cards { grid-area: cards; min-width: 0; }
+.cc-expense { grid-area: stats; }
+.cc-list { grid-area: list; }
+.cc-add { grid-area: add; }
+.cc-settings { grid-area: settings; }
+
+.cc-grid > .section {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.cc-grid .section-card {
+  flex: 1 1 auto;
+}
+
+.app-shell--tablet .cc-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-areas:
+    'cards cards'
+    'stats settings'
+    'list list'
+    'add add';
+}
+
+@media (min-width: 826px) {
+  .app-shell--tablet .cc-grid,
+  .app-shell--desktop .cc-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-areas:
+      'cards cards cards'
+      'stats list list'
+      'add add settings';
+  }
+}
+
+.app-shell--desktop .cc-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-areas:
+    'cards cards cards'
+    'stats list list'
+    'add add settings';
+}
+
+.app-shell--mobile .cc-grid {
+  row-gap: 22px;
+}
+
+.app-shell--mobile .cc-grid .section-head {
+  margin-bottom: 12px;
+  padding: 0 25px;
+}
+
+.app-shell--mobile .cc-add .section-head {
+  margin-bottom: 17px;
+}
+
+.app-shell--mobile .cc-grid .section-card,
+.app-shell--mobile .cc-list__rows {
+  margin: 0 25px;
+}
+
+/* ─── My Cards ─── */
+.cc-cards__row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--dash-gap, 25px);
+}
+
+/* Strip: tab frame's 231×170 cards (narrow tablet) / mobile frame's 265×170 cards */
+.app-shell--tablet .cc-cards__row,
+.app-shell--mobile .cc-cards__row {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.app-shell--tablet .cc-cards__row::-webkit-scrollbar,
+.app-shell--mobile .cc-cards__row::-webkit-scrollbar {
+  display: none;
+}
+
+.app-shell--tablet .cc-cards__row .credit-card {
+  flex: 0 0 231px;
+  scroll-snap-align: start;
+}
+
+.app-shell--tablet .cc-cards__row {
+  margin-right: -25px;
+  padding-right: 25px;
+}
+
+.app-shell--mobile .cc-cards__row {
+  gap: 20px;
+  padding: 0 25px;
+  scroll-padding: 0 25px;
+}
+
+@media (min-width: 826px) {
+  .app-shell--tablet .cc-cards__row {
+    display: grid;
+    overflow: visible;
+    margin-right: 0;
+    padding-right: 0;
+  }
+
+  .app-shell--tablet .cc-cards__row .credit-card {
+    flex: none;
+  }
+}
+
+.credit-card--deep {
+  background: linear-gradient(135.5deg, #0f2840, var(--color-onyx));
+}
+
+/* Figma card: 231×170 tab → 350×225 desktop; meta row sits 73 / 91px from the top */
+.cc-cards .credit-card__meta {
+  margin-top: auto;
+}
+
+.cc-cards .credit-card__footer {
+  margin-top: 16px;
+}
+
+.app-shell--desktop .cc-cards .credit-card {
+  height: calc(170px + 55 * var(--f));
+}
+
+.app-shell--desktop .cc-cards .credit-card__footer {
+  margin-top: calc(16px + 13 * var(--f));
+}
+
+/* ─── Shared icon tile ─── */
+.cc-tile {
+  flex: 0 0 auto;
+  width: var(--tile, 45px);
+  height: var(--tile, 45px);
+  border-radius: var(--tile-r, 12px);
+  display: grid;
+  place-items: center;
+}
+
+.cc-tile img {
+  width: var(--glyph, 20px);
+  height: var(--glyph, 20px);
+}
+
+/* ─── Card Expense Statistics (tab 231×231 · desktop 350×310 · mobile 325×300) ─── */
+.cc-expense__card {
+  --chart-w: 141px;
+  --dot: 12px;
+  --legend-font: 12px;
+  --legend-lh: 15px;
+  --legend-gap: 10px;
+  --legend-row: 12px;
+  --legend-col: 21px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 18px 19px;
+}
+
+.cc-expense__chart {
+  display: block;
+  width: calc(var(--chart-w) * 216 / 200);
+  aspect-ratio: 216 / 214;
+  margin: calc(var(--chart-w) * -8 / 200);
+  overflow: visible;
+}
+
+.cc-expense__slice {
+  transition: transform 0.2s ease, filter 0.2s ease;
+  cursor: pointer;
+}
+
+.cc-expense__slice.is-active {
+  filter: brightness(1.08) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.35));
+}
+
+.cc-expense__hole {
+  fill: var(--color-white);
+  filter: drop-shadow(4px 4px 6px rgba(0, 0, 0, 0.28));
+  pointer-events: none;
+}
+
+.cc-expense__legend {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: var(--legend-row) var(--legend-col);
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cc-expense__legend li {
+  display: flex;
+  align-items: center;
+  gap: var(--legend-gap);
+  font-size: var(--legend-font);
+  line-height: var(--legend-lh);
+  color: var(--color-muted);
+  white-space: nowrap;
+  cursor: default;
+  transition: color 0.15s ease;
+}
+
+.cc-expense__legend li.is-active {
+  color: var(--color-dark);
+}
+
+.cc-expense__legend i {
+  flex: 0 0 auto;
+  width: var(--dot);
+  height: var(--dot);
+  border-radius: 50%;
+}
+
+.app-shell--mobile .cc-expense__card {
+  --chart-w: 200px;
+  padding: 20px 20px 19px;
+}
+
+.app-shell--mobile .cc-expense__legend {
+  margin-top: 21px;
+}
+
+.app-shell--desktop .cc-expense__card {
+  --chart-w: calc(141px + 47 * var(--f));
+  --dot: calc(12px + 3 * var(--f));
+  --legend-font: calc(12px + 3 * var(--f));
+  --legend-lh: calc(15px + 3 * var(--f));
+  --legend-gap: calc(10px + 2 * var(--f));
+  --legend-row: calc(12px + 2 * var(--f));
+  --legend-col: calc(21px + 32 * var(--f));
+  padding: calc(20px + 10 * var(--f)) 18px calc(19px + 9 * var(--f));
+}
+
+.app-shell--desktop .cc-expense__legend {
+  margin-top: calc(10px + 6 * var(--f));
+}
+
+/* Paired with Card Setting on narrow tablets: grow the chart into the taller card */
+.app-shell--tablet .cc-expense__card {
+  --chart-w: 170px;
+}
+
+@media (min-width: 826px) {
+  .app-shell--tablet .cc-expense__card {
+    --chart-w: 141px;
+  }
+}
+
+/* ─── Card List (tab 487×69 · desktop 730×90 · mobile 325×69) ─── */
+.cc-list__rows {
+  --tile: 45px;
+  --tile-r: 12px;
+  --glyph: 20px;
+  --row-h: 69px;
+  --title-font: 12px;
+  --title-lh: 15px;
+  --value-font: 12px;
+  --value-lh: 15px;
+  --value-gap: 3px;
+  --details-font: 11px;
+  --details-lh: 13px;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cc-list__row {
+  flex: 1 0 auto;
+  display: grid;
+  grid-template-columns: calc(var(--tile) + var(--tile-gap)) minmax(0, 78fr) minmax(0, 71fr) minmax(0, 101fr) minmax(0, 87fr) auto;
+  align-items: center;
+  column-gap: 0;
+  min-height: var(--row-h);
+  padding: 0 15px 0 12px;
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  box-sizing: border-box;
+}
+
+.cc-list__rows {
+  --tile-gap: 12px;
+}
+
+.cc-list__row > .cc-list__cell {
+  padding-right: 8px;
+}
+
+.cc-list__cell {
+  min-width: 0;
+}
+
+.cc-list__title,
+.cc-list__value {
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cc-list__title {
+  font-size: var(--title-font);
+  line-height: var(--title-lh);
+  font-weight: 500;
+  color: var(--color-dark);
+}
+
+.cc-list__value {
+  margin-top: var(--value-gap);
+  font-size: var(--value-font);
+  line-height: var(--value-lh);
+  color: var(--color-muted);
+}
+
+.cc-list__details {
+  padding: 0;
+  font-size: var(--details-font);
+  line-height: var(--details-lh);
+  font-weight: 500;
+  color: var(--color-primary);
+  white-space: nowrap;
+}
+
+.cc-list__details:hover {
+  text-decoration: underline;
+}
+
+.app-shell--desktop .cc-list__rows {
+  --tile: calc(45px + 15 * var(--f));
+  --tile-r: calc(12px + 8 * var(--f));
+  --glyph: calc(20px + 6 * var(--f));
+  --row-h: calc(69px + 21 * var(--f));
+  --title-font: calc(12px + 4 * var(--f));
+  --title-lh: calc(15px + 4 * var(--f));
+  --value-font: calc(12px + 3 * var(--f));
+  --value-lh: calc(15px + 3 * var(--f));
+  --value-gap: calc(3px + 4 * var(--f));
+  --details-font: calc(11px + 4 * var(--f));
+  --details-lh: calc(13px + 5 * var(--f));
+  gap: calc(12px + 8 * var(--f));
+}
+
+.app-shell--desktop .cc-list__row {
+  padding: 0 calc(15px + 15 * var(--f)) 0 calc(12px + 3 * var(--f));
+}
+
+.app-shell--desktop .cc-list__rows {
+  --tile-gap: calc(12px + 3 * var(--f));
+}
+
+.app-shell--mobile .cc-list__rows {
+  --title-font: 14px;
+  --title-lh: 17px;
+  --value-gap: 4px;
+  gap: 10px;
+}
+
+.app-shell--mobile .cc-list__row {
+  grid-template-columns: calc(var(--tile) + var(--tile-gap)) minmax(0, 97fr) minmax(0, 79fr) auto;
+  padding-right: 14px;
+  border-radius: 15px;
+}
+
+.app-shell--mobile .cc-list__cell--extra {
+  display: none;
+}
+
+/* ─── Add New Card (tab 487×321 · desktop 730×440 · mobile 325×527) ─── */
+.cc-add__card {
+  --intro-font: 12px;
+  --intro-lh: 22px;
+  --label-font: 12px;
+  --label-lh: 15px;
+  --label-gap: 7px;
+  --input-h: 40px;
+  --input-r: 10px;
+  --input-font: 12px;
+  --input-pad: 15px;
+  --field-row: 12px;
+  --field-col: 25px;
+  --btn-w: 120px;
+  --btn-h: 40px;
+  --btn-font: 15px;
+  display: flex;
+  flex-direction: column;
+  padding: 19px 20px 25px;
+}
+
+.cc-add__intro {
+  margin: 0 0 15px;
+  font-size: var(--intro-font);
+  line-height: var(--intro-lh);
+  color: var(--color-muted);
+}
+
+.cc-add__fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--field-row) var(--field-col);
+}
+
+.cc-add__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--label-gap);
+  min-width: 0;
+}
+
+.cc-add__label {
+  font-size: var(--label-font);
+  line-height: var(--label-lh);
+  color: var(--color-dark);
+}
+
+.cc-add__control {
+  position: relative;
+  display: block;
+}
+
+.cc-add__control input {
+  width: 100%;
+  height: var(--input-h);
+  padding: 0 var(--input-pad);
+  border: 1px solid var(--color-border);
+  border-radius: var(--input-r);
+  background: var(--color-surface);
+  font-size: var(--input-font);
+  color: var(--color-dark);
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.cc-add__control input::placeholder {
+  color: var(--color-muted);
+  opacity: 1;
+}
+
+.cc-add__control input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(216, 17, 89, 0.12);
+}
+
+.cc-add__chevron {
+  display: none;
+  position: absolute;
+  top: 50%;
+  right: var(--input-pad);
+  width: 12px;
+  height: 7px;
+  transform: translateY(-50%);
+  color: var(--color-muted);
+  pointer-events: none;
+}
+
+.app-shell--desktop .cc-add__chevron {
+  display: block;
+}
+
+.app-shell--desktop .cc-add__control--chevron input {
+  padding-right: calc(var(--input-pad) + 22px);
+}
+
+.cc-add__submit {
+  align-self: flex-start;
+  width: var(--btn-w);
+  height: var(--btn-h);
+  margin-top: 20px;
+  border-radius: var(--input-r);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font-size: var(--btn-font);
+  font-weight: 500;
+  transition: background 0.15s ease;
+}
+
+.cc-add__submit:hover {
+  background: var(--color-accent);
+}
+
+.app-shell--desktop .cc-add__card {
+  --intro-font: calc(12px + 4 * var(--f));
+  --intro-lh: calc(22px + 6 * var(--f));
+  --label-font: calc(12px + 4 * var(--f));
+  --label-lh: calc(15px + 4 * var(--f));
+  --label-gap: calc(7px + 4 * var(--f));
+  --input-h: calc(40px + 10 * var(--f));
+  --input-r: calc(10px + 5 * var(--f));
+  --input-font: calc(12px + 3 * var(--f));
+  --input-pad: calc(15px + 5 * var(--f));
+  --field-row: calc(12px + 10 * var(--f));
+  --field-col: calc(25px + 5 * var(--f));
+  --btn-w: calc(120px + 40 * var(--f));
+  --btn-h: calc(40px + 10 * var(--f));
+  --btn-font: calc(15px + 3 * var(--f));
+  padding: calc(19px + 8 * var(--f)) calc(20px + 10 * var(--f)) calc(25px + 13 * var(--f));
+}
+
+.app-shell--desktop .cc-add__intro {
+  margin-bottom: calc(15px + 14 * var(--f));
+}
+
+.app-shell--desktop .cc-add__submit {
+  margin-top: calc(20px + 10 * var(--f));
+}
+
+.app-shell--mobile .cc-add__card {
+  --label-font: 13px;
+  --label-lh: 16px;
+  --label-gap: 9px;
+  --field-row: 16px;
+  padding: 14px 20px 20px;
+}
+
+.app-shell--mobile .cc-add__fields {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.app-shell--mobile .cc-add__submit {
+  align-self: stretch;
+  width: auto;
+}
+
+/* ─── Card Setting (tab 231×321 · desktop 350×440 · mobile 325×325) ─── */
+.cc-settings__card {
+  --tile: 45px;
+  --tile-r: 12px;
+  --glyph: 20px;
+  --item-gap: 14px;
+  --copy-gap: 10px;
+  --title-font: 12px;
+  --title-lh: 15px;
+  --sub-font: 11px;
+  --sub-lh: 13px;
+  --sub-gap: 4px;
+  padding: 20px 18px;
+}
+
+.cc-settings__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--item-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cc-settings__item {
+  display: flex;
+  align-items: center;
+  gap: var(--copy-gap);
+  width: 100%;
+  padding: 0;
+  text-align: left;
+  border-radius: var(--tile-r);
+}
+
+.cc-settings__copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sub-gap);
+  min-width: 0;
+}
+
+.cc-settings__title {
+  font-size: var(--title-font);
+  line-height: var(--title-lh);
+  font-weight: 500;
+  color: var(--color-dark);
+}
+
+.cc-settings__sub {
+  font-size: var(--sub-font);
+  line-height: var(--sub-lh);
+  color: var(--color-muted);
+}
+
+.cc-settings__item:hover .cc-settings__title {
+  color: var(--color-primary);
+}
+
+.cc-settings__item .cc-tile {
+  transition: transform 0.15s ease;
+}
+
+.cc-settings__item:hover .cc-tile {
+  transform: scale(1.06);
+}
+
+.app-shell--desktop .cc-settings__card {
+  --tile: calc(45px + 15 * var(--f));
+  --tile-r: calc(12px + 8 * var(--f));
+  --glyph: calc(20px + 5 * var(--f));
+  --item-gap: calc(14px + 6 * var(--f));
+  --copy-gap: calc(10px + 10 * var(--f));
+  --title-font: calc(12px + 4 * var(--f));
+  --title-lh: calc(15px + 4 * var(--f));
+  --sub-font: calc(11px + 4 * var(--f));
+  --sub-lh: calc(13px + 5 * var(--f));
+  --sub-gap: calc(4px + 3 * var(--f));
+  padding: calc(20px + 10 * var(--f)) calc(18px + 12 * var(--f));
+}
+
+.app-shell--mobile .cc-settings__card {
+  --item-gap: 15px;
+  --copy-gap: 12px;
+  --title-font: 14px;
+  --title-lh: 17px;
+  --sub-font: 12px;
+  --sub-lh: 15px;
+  padding: 20px;
+}
+
+/* Narrow tablet pairing: stats + settings share a row; centre the setting list vertically */
+.app-shell--tablet .cc-settings__card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
