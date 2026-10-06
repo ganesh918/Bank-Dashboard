@@ -1,4 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import ScrollToTop from './components/ScrollToTop';
 import ProtectedRoute from './components/ProtectedRoute';
 import Dashboard from './pages/Dashboard';
 import Transactions from './pages/Transactions';
@@ -8,6 +9,7 @@ import CreditCards from './pages/CreditCards';
 import Loans from './pages/Loans';
 import Services from './pages/Services';
 import Settings from './pages/Settings';
+import Privileges from './pages/Privileges';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import { AuthProvider } from './context/AuthContext';
@@ -15,7 +17,9 @@ import { ToastProvider } from './context/ToastContext';
 
 function AppRoutes() {
   return (
-    <Routes>
+    <>
+      <ScrollToTop />
+      <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route
@@ -82,8 +86,17 @@ function AppRoutes() {
           </ProtectedRoute>
         }
       />
+      <Route
+        path="/privileges"
+        element={
+          <ProtectedRoute>
+            <Privileges />
+          </ProtectedRoute>
+        }
+      />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
+    </>
   );
 }
 

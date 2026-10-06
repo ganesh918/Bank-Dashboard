@@ -6,7 +6,7 @@ export const navItems = [
   { id: 'cards', label: 'Credit Cards', icon: 'credit-card-1.svg', to: '/credit-cards' },
   { id: 'loans', label: 'Loans', icon: 'loan-1.svg', to: '/loans' },
   { id: 'services', label: 'Services', icon: 'service-1.svg', to: '/services' },
-  { id: 'privileges', label: 'My Privileges', icon: 'econometrics-1.svg', to: '#' },
+  { id: 'privileges', label: 'My Privileges', icon: 'econometrics-1.svg', to: '/privileges' },
   { id: 'settings', label: 'Setting', icon: 'settings-solid-1.svg', to: '/settings' },
 ];
 

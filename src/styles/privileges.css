@@ -1,0 +1,218 @@
+.app-shell--tablet .prv-main {
+  padding: 25px 25px 40px;
+}
+
+.app-shell--mobile .prv-main {
+  padding: 22px 25px 40px;
+}
+
+.prv-grid {
+  display: grid;
+  gap: 24px;
+  min-width: 0;
+}
+
+.prv-intro {
+  margin: 0 0 20px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--color-muted);
+  max-width: 720px;
+}
+
+.prv-loyalty {
+  padding: 24px 28px;
+  display: grid;
+  gap: 18px;
+}
+
+.prv-loyalty__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.prv-loyalty__title {
+  margin: 0 0 6px;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-heading);
+}
+
+.prv-loyalty__subtitle {
+  margin: 0;
+  font-size: 14px;
+  color: var(--color-muted);
+  max-width: 420px;
+}
+
+.prv-loyalty__points {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1.1;
+}
+
+.prv-loyalty__points span {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-muted);
+}
+
+.prv-loyalty__tier h3 {
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-heading);
+}
+
+.prv-loyalty__tier p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--color-muted);
+}
+
+.prv-loyalty__track {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--color-muted);
+}
+
+.prv-loyalty__bar {
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: var(--color-icon-bg);
+  overflow: hidden;
+}
+
+.prv-loyalty__fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--color-deposit), var(--color-primary));
+}
+
+.prv-loyalty__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.prv-btn {
+  height: 44px;
+  padding: 0 22px;
+  border-radius: 12px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+}
+
+.prv-btn--primary {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.prv-btn--ghost {
+  background: var(--color-icon-bg);
+  color: var(--color-heading);
+}
+
+.prv-cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+}
+
+.prv-card {
+  padding: 22px 24px;
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+}
+
+.prv-card__top {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 14px;
+  align-items: start;
+}
+
+.prv-card__icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.prv-card__icon img {
+  width: 22px;
+  height: 22px;
+}
+
+.prv-card__copy h3 {
+  margin: 0 0 4px;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--color-heading);
+}
+
+.prv-card__copy p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+.prv-card__tier {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--color-primary) 12%, var(--color-surface));
+}
+
+.prv-card__perks {
+  margin: 0;
+  padding: 0 0 0 18px;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.prv-card__perks li + li {
+  margin-top: 4px;
+}
+
+.prv-card__cta {
+  justify-self: start;
+}
+
+@media (max-width: 639px) {
+  .prv-loyalty {
+    padding: 20px;
+  }
+
+  .prv-loyalty__track {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .prv-loyalty__track span:last-child {
+    text-align: right;
+  }
+}

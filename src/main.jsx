@@ -11,6 +11,7 @@ import './styles/credit-cards.css';
 import './styles/loans.css';
 import './styles/services.css';
 import './styles/settings.css';
+import './styles/privileges.css';
 import './styles/animations.css';
 import './styles/mobile-original.css';
 import './styles/auth.css';

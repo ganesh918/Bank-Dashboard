@@ -35,7 +35,7 @@ export default function AppShell({ pageTitle, children, mainClassName = 'dashboa
           pageTitle={pageTitle}
           onMenuClick={() => setMobileNavOpen(true)}
         />
-        <main className={mainClass}>{children}</main>
+        <main className={`${mainClass} app-scroll`}>{children}</main>
       </div>
     </div>
   );
